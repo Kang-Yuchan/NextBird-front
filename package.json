@@ -2,19 +2,25 @@
   "name": "nextbird-front",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "dev": "next -p 4000",
+    "build": "next build",
+    "start": "next start"
+  },
   "license": "MIT",
   "author": "Kang-Yuchan",
   "dependencies": {
+    "global": "^4.4.0",
     "next": "^9.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "eslint": "^7.1.0",
-    "nodemon": "^2.0.4",
-    "webpack": "^4.43.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.4"
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "nodemon": "^2.0.4",
+    "webpack": "^4.43.0"
   }
 }
