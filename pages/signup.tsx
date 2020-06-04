@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import { Form, Input, Checkbox, Button } from 'antd';
 
@@ -14,24 +14,27 @@ const SignupDiv = styled.div`
   margin-top: 10px;
 `;
 
-const Signup = () => {
-  const useInput = (initialValue = null) => {
-    const [value, setter] = useState(initialValue);
-    const handler = useCallback((e) => {
-      setter(e.target.value);
+type UseInputType = [string, (e: React.FormEvent<EventTarget>) => void];
+
+const Signup: React.FunctionComponent = () => {
+  const useInput = (initialValue: string): UseInputType => {
+    const [value, setter] = React.useState<string>(initialValue);
+    const handler = React.useCallback((e: React.FormEvent<EventTarget>): void => {
+      const target = e.target as HTMLInputElement;
+      setter(target.value);
     }, []);
     return [value, handler];
   };
 
-  const [id, onChangeId] = useInput('');
-  const [password, onChangePassword] = useInput('');
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [term, setTerm] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [termError, setTermError] = useState(false);
+  const [id, onChangeId]: UseInputType = useInput('');
+  const [password, onChangePassword]: UseInputType = useInput('');
+  const [passwordCheck, setPasswordCheck] = React.useState<string>('');
+  const [term, setTerm] = React.useState<boolean>(false);
+  const [passwordError, setPasswordError] = React.useState<boolean>(false);
+  const [termError, setTermError] = React.useState<boolean>(false);
 
-  const onSubmit = useCallback(
-    (e) => {
+  const onSubmit = React.useCallback(
+    (e: React.FormEvent<EventTarget>): void => {
       if (!password) {
         setPasswordError(true);
       }
@@ -48,21 +51,23 @@ const Signup = () => {
     [password, passwordCheck, term],
   );
 
-  const onChangePasswordCheck = useCallback(
-    (e) => {
-      setPasswordError(e.target.value !== password);
-      setPasswordCheck(e.target.value);
+  const onChangePasswordCheck = React.useCallback(
+    (e: React.FormEvent<EventTarget>): void => {
+      const target = e.target as HTMLInputElement;
+      setPasswordError(target.value !== password);
+      setPasswordCheck(target.value);
     },
     [password],
   );
 
-  const onChangeTerm = useCallback((e) => {
-    setTermError(!e.target.checked);
-    setTerm(e.target.checked);
+  const onChangeTerm = React.useCallback((e: React.ChangeEvent): void => {
+    const target = e.target as HTMLInputElement;
+    setTermError(!target.checked);
+    setTerm(target.checked);
   }, []);
 
   return (
-    <>
+    <React.Fragment>
       <FormComponent onSubmit={onSubmit}>
         <div>
           <label htmlFor="user-id">ID</label>
@@ -104,7 +109,7 @@ const Signup = () => {
           </Button>
         </SignupDiv>
       </FormComponent>
-    </>
+    </React.Fragment>
   );
 };
 

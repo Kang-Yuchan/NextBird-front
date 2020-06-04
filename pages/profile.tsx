@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-const Profile = () => {
+const Profile: React.FunctionComponent = () => {
   return (
     <>
       <div>Profile</div>

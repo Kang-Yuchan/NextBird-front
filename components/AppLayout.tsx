@@ -2,14 +2,15 @@ import * as React from 'react';
 import { Menu, Input, Button } from 'antd';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { NodeProps } from '../interface';
 
 const InputSearch = styled(Input.Search)`
   vertical-align: middle;
 `;
 
-const AppLayout = ({ children }) => {
+const AppLayout = ({ children }: NodeProps): React.ReactNode => {
   return (
-    <div>
+    <React.Fragment>
       <Menu mode="horizontal">
         <Menu.Item key="home">
           <Link href="/">
@@ -31,7 +32,7 @@ const AppLayout = ({ children }) => {
         </a>
       </Link>
       {children}
-    </div>
+    </React.Fragment>
   );
 };
 
