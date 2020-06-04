@@ -8,10 +8,35 @@ const FormComponent = styled(Form)`
   padding: 10;
 `;
 
+const ErrorMsg = styled.span`
+  color: red;
+`;
+
+const SignupDiv = styled.div`
+  margin-top: 10px;
+`;
+
 const Signup = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [term, setTerm] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [termError, setTermError] = useState(false);
+
   const onSubmit = (e) => {
+    if (!password) {
+      setPasswordError(true);
+    }
+
+    if (password !== passwordCheck) {
+      setPasswordError(true);
+    }
+
+    if (!term) {
+      setTermError(true);
+    }
     e.preventDefault();
-    console.log(e);
   };
 
   const onChangeId = (e) => {
@@ -23,16 +48,14 @@ const Signup = () => {
   };
 
   const onChangePasswordCheck = (e) => {
+    setPasswordError(e.target.value !== password);
     setPasswordCheck(e.target.value);
   };
 
   const onChangeTerm = (e) => {
+    setTermError(!e.target.checked);
     setTerm(e.target.checked);
   };
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
-  const [term, setTerm] = useState(false);
 
   return (
     <>
@@ -48,46 +71,41 @@ const Signup = () => {
           <div>
             <label htmlFor='user-id'>ID</label>
             <br />
-            <Input
-              type='text'
-              required
-              name='user-id'
-              onChange={onChangeId}
-              value={id}
-            />
+            <Input name='user-id' required onChange={onChangeId} value={id} />
           </div>
           <div>
             <label htmlFor='user-password'>Password</label>
             <br />
             <Input
               type='password'
-              required
               name='user-password'
               onChange={onChangePassword}
               value={password}
             />
           </div>
+          {passwordError && <ErrorMsg>This password is incorrect.</ErrorMsg>}
           <div>
             <label htmlFor='user-password-check'>Password Check</label>
             <br />
             <Input
               type='password'
-              required
               name='user-password-check'
               onChange={onChangePasswordCheck}
               value={passwordCheck}
             />
+            {passwordError && <ErrorMsg>This password is incorrect</ErrorMsg>}
           </div>
           <div>
             <Checkbox name='user-term' checked={term} onChange={onChangeTerm}>
               Please repeat that in a respectful way
             </Checkbox>
+            {termError && <ErrorMsg>Please check the term.</ErrorMsg>}
           </div>
-          <div>
-            <Button type='primary' htmlType='submit'>
+          <SignupDiv>
+            <Button type='primary' htmlType='submit' onClick={onSubmit}>
               Submit
             </Button>
-          </div>
+          </SignupDiv>
         </FormComponent>
       </AppLayout>
     </>
