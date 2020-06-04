@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from "react";
-import styled from "styled-components";
-import { Form, Input, Checkbox, Button } from "antd";
+import React, { useState, useCallback } from 'react';
+import styled from 'styled-components';
+import { Form, Input, Checkbox, Button } from 'antd';
 
 const FormComponent = styled(Form)`
   padding: 10;
@@ -23,9 +23,9 @@ const Signup = () => {
     return [value, handler];
   };
 
-  const [id, onChangeId] = useInput("");
-  const [password, onChangePassword] = useInput("");
-  const [passwordCheck, setPasswordCheck] = useState("");
+  const [id, onChangeId] = useInput('');
+  const [password, onChangePassword] = useInput('');
+  const [passwordCheck, setPasswordCheck] = useState('');
   const [term, setTerm] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [termError, setTermError] = useState(false);
@@ -45,7 +45,7 @@ const Signup = () => {
       }
       e.preventDefault();
     },
-    [password, passwordCheck, term]
+    [password, passwordCheck, term],
   );
 
   const onChangePasswordCheck = useCallback(
@@ -53,7 +53,7 @@ const Signup = () => {
       setPasswordError(e.target.value !== password);
       setPasswordCheck(e.target.value);
     },
-    [password]
+    [password],
   );
 
   const onChangeTerm = useCallback((e) => {
@@ -65,16 +65,16 @@ const Signup = () => {
     <>
       <FormComponent onSubmit={onSubmit}>
         <div>
-          <label htmlFor='user-id'>ID</label>
+          <label htmlFor="user-id">ID</label>
           <br />
-          <Input name='user-id' required onChange={onChangeId} value={id} />
+          <Input name="user-id" required onChange={onChangeId} value={id} />
         </div>
         <div>
-          <label htmlFor='user-password'>Password</label>
+          <label htmlFor="user-password">Password</label>
           <br />
           <Input
-            type='password'
-            name='user-password'
+            type="password"
+            name="user-password"
             required
             onChange={onChangePassword}
             value={password}
@@ -82,24 +82,24 @@ const Signup = () => {
         </div>
         {passwordError && <ErrorMsg>This password is incorrect.</ErrorMsg>}
         <div>
-          <label htmlFor='user-password-check'>Password Check</label>
+          <label htmlFor="user-password-check">Password Check</label>
           <br />
           <Input
-            type='password'
-            name='user-password-check'
+            type="password"
+            name="user-password-check"
             onChange={onChangePasswordCheck}
             value={passwordCheck}
           />
           {passwordError && <ErrorMsg>This password is incorrect</ErrorMsg>}
         </div>
         <div>
-          <Checkbox name='user-term' checked={term} onChange={onChangeTerm}>
+          <Checkbox name="user-term" checked={term} onChange={onChangeTerm}>
             Please repeat that in a respectful way
           </Checkbox>
           {termError && <ErrorMsg>Please check the term.</ErrorMsg>}
         </div>
         <SignupDiv>
-          <Button type='primary' htmlType='submit' onClick={onSubmit}>
+          <Button type="primary" htmlType="submit" onClick={onSubmit}>
             Submit
           </Button>
         </SignupDiv>
