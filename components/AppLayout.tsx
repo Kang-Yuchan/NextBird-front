@@ -36,7 +36,7 @@ const AppLayout = ({ children }: NodeProps): React.ReactNode => {
           <InputSearch enterButton />
         </Menu.Item>
       </Menu>
-      <Row>
+      <Row gutter={10}>
         <Col xs={24} md={6}>
           {dummy.isLoggedIn ? <UserCard userData={dummy} /> : <LoginForm />}
         </Col>
