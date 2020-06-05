@@ -11,3 +11,15 @@ export interface NodeProps {
     pageProps: ComponentProps;
   };
 }
+
+export interface UserData {
+  id: string;
+  Post: Array<string>;
+  Follwings: Array<string>;
+  Followers: Array<string>;
+  isLoggedIn: boolean;
+}
+
+export interface UserCardProps {
+  userData: UserData;
+}

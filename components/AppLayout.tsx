@@ -1,18 +1,21 @@
 import * as React from 'react';
-import { Menu, Input, Button, Row, Col, Card, Avatar } from 'antd';
+import { Menu, Input, Row, Col } from 'antd';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { NodeProps } from '../interface';
+import { NodeProps, UserData } from '../interface';
+import LoginForm from '../components/LoginForm';
+import UserCard from '../components/UserCard';
 
 const InputSearch = styled(Input.Search)`
   vertical-align: middle;
 `;
 
-const dummy = {
+const dummy: UserData = {
   id: 'kangyuchan',
   Post: [],
   Follwings: [],
   Followers: [],
+  isLoggedIn: false,
 };
 
 const AppLayout = ({ children }: NodeProps): React.ReactNode => {
@@ -33,34 +36,9 @@ const AppLayout = ({ children }: NodeProps): React.ReactNode => {
           <InputSearch enterButton />
         </Menu.Item>
       </Menu>
-      <Link href="/signup">
-        <a>
-          <Button>Sign Up</Button>
-        </a>
-      </Link>
       <Row>
         <Col xs={24} md={6}>
-          <Card
-            actions={[
-              <div key="tweet">
-                Tweet
-                <br />
-                {dummy.Post.length}
-              </div>,
-              <div key="following">
-                Following
-                <br />
-                {dummy.Post.length}
-              </div>,
-              <div key="follower">
-                Follower
-                <br />
-                {dummy.Post.length}
-              </div>,
-            ]}
-          >
-            <Card.Meta avatar={<Avatar>{dummy.id[0]}</Avatar>} title={dummy.id} />
-          </Card>
+          {dummy.isLoggedIn ? <UserCard userData={dummy} /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}
