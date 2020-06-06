@@ -44,7 +44,9 @@ const AppLayout = ({ children }: NodeProps): React.ReactNode => {
           {children}
         </Col>
         <Col xs={24} md={6}>
-          3
+          <a target="_blank" rel="noreferrer" href="https://github.com/Kang-Yuchan">
+            Made by Kang Yuchan
+          </a>
         </Col>
       </Row>
     </React.Fragment>

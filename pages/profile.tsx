@@ -1,13 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Input, Button, List, Card } from 'antd';
+import { Button, List, Card } from 'antd';
 import { StopOutlined } from '@ant-design/icons';
-
-const Form = styled.form`
-  margin-bottom: 20px;
-  border: 1px solid #d9d9d9;
-  padding: 20px;
-`;
+import ProfileForm from '../components/ProfileForm';
 
 const FollowList = styled(List)`
   margin-bottom: 20px;
@@ -28,10 +23,7 @@ const ListItem = styled(List.Item)`
 const Profile: React.ReactNode = () => {
   return (
     <React.Fragment>
-      <Form>
-        <Input addonBefore="name" />
-        <Button type="primary">Edit</Button>
-      </Form>
+      <ProfileForm />
       <FollowList
         style={{ marginBottom: '20px' }}
         grid={{ gutter: 4, xs: 2, md: 3 }}

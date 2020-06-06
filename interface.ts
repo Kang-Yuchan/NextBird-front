@@ -23,3 +23,27 @@ export interface UserData {
 export interface UserCardProps {
   userData: UserData;
 }
+
+export interface PostData {
+  isLoggedIn: boolean;
+  imagePaths: Array<string>;
+  mainPosts: Array<{
+    img: string;
+    User: {
+      id: number;
+      name: string;
+    };
+    content: string;
+    createdAt: string;
+  }>;
+}
+
+export interface MainPost {
+  img: string;
+  User: {
+    id: number;
+    name: string;
+  };
+  content: string;
+  createdAt: string;
+}
