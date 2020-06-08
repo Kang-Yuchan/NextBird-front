@@ -28,8 +28,6 @@ const reducer = (state = initialState, action) => {
     case ADD_POST: {
       return {
         ...state,
-        isLoggedIn: true,
-        user: action.data,
       };
     }
     case ADD_DUMMY: {

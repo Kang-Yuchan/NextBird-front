@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
-import { ComponentProps, ReduxReducer } from '../interface';
+import { ComponentProps } from '../interface';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import { createStore } from 'redux';
@@ -21,7 +21,7 @@ const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactN
   );
 };
 
-export default withRedux(({ initialState, options }) => {
+export default withRedux((initialState, options) => {
   const store = createStore(reducer, initialState);
   //store customizing
   return store;

@@ -31,12 +31,12 @@ const reducer = (state = initialState, action) => {
         isLoggedIn: false,
         user: null,
       };
-    } 
+    }
     default: {
       return {
         ...state,
-      }
+      };
+    }
   }
 };
-
 export default reducer;
