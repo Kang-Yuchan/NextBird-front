@@ -1,8 +1,10 @@
 import { AppProps } from 'next/app';
+import { Store } from 'redux';
 
 export type ComponentProps = {
   Component: AppProps;
   pageProps: AppProps;
+  store: Store<string>;
 };
 
 export interface NodeProps {
