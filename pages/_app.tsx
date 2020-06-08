@@ -4,7 +4,7 @@ import AppLayout from '../components/AppLayout';
 import { ComponentProps } from '../interface';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
-import { createStore } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import reducer from '../reducers';
 
 const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactNode => {
@@ -22,7 +22,13 @@ const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactN
 };
 
 export default withRedux((initialState, options) => {
-  const store = createStore(reducer, initialState);
-  //store customizing
+  const middlewares: Array<any> = [];
+  const enhancer = compose(
+    applyMiddleware(...middlewares),
+    !options.isServer && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'
+      ? window.__REDUX_DEVTOOLS_EXTENSION__()
+      : (f) => f,
+  );
+  const store = createStore(reducer, initialState, enhancer);
   return store;
 })(NextBird);
