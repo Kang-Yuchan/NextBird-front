@@ -2,6 +2,8 @@ import * as React from 'react';
 import { PostData } from '../interface';
 import PostForm from '../components/PostForm';
 import Post from '../components/Post';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction, logoutAction } from '../reducers/user';
 
 const dummy: PostData = {
   isLoggedIn: true,
@@ -20,8 +22,17 @@ const dummy: PostData = {
 };
 
 const Home: React.FunctionComponent = () => {
+  const dispatch = useDispatch();
+  const { isLoggedIn, user } = useSelector((state) => state.user);
+  React.useEffect(() => {
+    dispatch(loginAction);
+    dispatch(logoutAction);
+    dispatch(loginAction);
+  }, []);
+
   return (
     <React.Fragment>
+      {user ? <div>Log In: {user.name}</div> : <div>You are Logged out</div>}
       {dummy.isLoggedIn && <PostForm postData={dummy} />}
       {dummy.mainPosts.map((post) => {
         return <Post post={post} key={`${post}`} />;
