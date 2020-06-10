@@ -2,23 +2,17 @@ import * as React from 'react';
 import { Menu, Input, Row, Col } from 'antd';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { NodeProps, UserData } from '../interface';
+import { NodeProps } from '../interface';
 import LoginForm from '../components/LoginForm';
 import UserCard from '../components/UserCard';
+import { useSelector } from 'react-redux';
 
 const InputSearch = styled(Input.Search)`
   vertical-align: middle;
 `;
 
-const dummy: UserData = {
-  id: 'kangyuchan',
-  Post: [],
-  Follwings: [],
-  Followers: [],
-  isLoggedIn: false,
-};
-
 const AppLayout = ({ children }: NodeProps): React.ReactNode => {
+  const { isLoggedIn, user } = useSelector((state) => state.user);
   return (
     <React.Fragment>
       <Menu mode="horizontal">
@@ -38,7 +32,7 @@ const AppLayout = ({ children }: NodeProps): React.ReactNode => {
       </Menu>
       <Row gutter={10}>
         <Col xs={24} md={6}>
-          {dummy.isLoggedIn ? <UserCard userData={dummy} /> : <LoginForm />}
+          {isLoggedIn ? <UserCard userData={user} /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}

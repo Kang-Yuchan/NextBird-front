@@ -2,21 +2,18 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Input, Button } from 'antd';
 import { useInput, UseInputType, Form } from '../pages/signup';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../reducers/user';
 
 const LoginForm: React.FunctionComponent = () => {
+  const dispatch = useDispatch();
   const [id, onChangeId]: UseInputType = useInput('');
   const [password, onChangePassword]: UseInputType = useInput('');
 
-  const onSubmitForm = React.useCallback(
-    (e: React.FormEvent<EventTarget>): void => {
-      e.preventDefault();
-      console.log({
-        id,
-        password,
-      });
-    },
-    [id, password],
-  );
+  const onSubmitForm = React.useCallback((e: React.FormEvent<EventTarget>): void => {
+    e.preventDefault();
+    dispatch(loginAction);
+  }, []);
   return (
     <Form onSubmit={onSubmitForm}>
       <div>

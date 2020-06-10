@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Input, Button } from 'antd';
-import { PostData } from '../interface';
+import { useSelector } from 'react-redux';
 
 const Form = styled.form`
   margin-bottom: 20px;
@@ -19,11 +19,8 @@ const Img = styled.img`
   width: 200px;
 `;
 
-type PostFormProps = {
-  postData: PostData;
-};
-
-const PostForm = ({ postData }: PostFormProps): React.ReactElement => {
+const PostForm = (): React.ReactElement => {
+  const { imagePaths } = useSelector((state) => state.post);
   return (
     <Form encType="multipart/form-data">
       <Input.TextArea maxLength={140} placeholder="Let's Tweet!!"></Input.TextArea>
@@ -35,7 +32,7 @@ const PostForm = ({ postData }: PostFormProps): React.ReactElement => {
         </TweetBtn>
       </div>
       <div>
-        {postData.imagePaths.map(
+        {imagePaths.map(
           (v: string): React.ReactElement => {
             return (
               <ImgDiv key={v}>

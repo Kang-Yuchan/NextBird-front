@@ -1,5 +1,16 @@
 export const initialState = {
-  mainPosts: [],
+  mainPosts: [
+    {
+      img: 'https://blog.f-arts.work/wp-content/uploads/2018/09/nextjs.png.webp',
+      User: {
+        id: 1,
+        name: 'kangyuchan',
+      },
+      content: 'I love Next.js ♥',
+      createdAt: '2020-06-05',
+    },
+  ],
+  imagePaths: ['image'],
 };
 
 export const ADD_POST = 'ADD_POST';

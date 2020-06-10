@@ -15,7 +15,7 @@ export interface NodeProps {
 }
 
 export interface UserData {
-  id: string;
+  name: string;
   Post: Array<string>;
   Follwings: Array<string>;
   Followers: Array<string>;
