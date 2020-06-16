@@ -2,18 +2,28 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Input, Button } from 'antd';
 import { useInput, UseInputType, Form } from '../pages/signup';
-import { useDispatch } from 'react-redux';
-import { loginAction } from '../reducers/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOG_IN_REQUEST } from '../reducers/user';
 
 const LoginForm: React.FunctionComponent = () => {
   const dispatch = useDispatch();
+  const { isLoggingIn } = useSelector((state) => state.user);
   const [id, onChangeId]: UseInputType = useInput('');
   const [password, onChangePassword]: UseInputType = useInput('');
 
-  const onSubmitForm = React.useCallback((e: React.FormEvent<EventTarget>): void => {
-    e.preventDefault();
-    dispatch(loginAction);
-  }, []);
+  const onSubmitForm = React.useCallback(
+    (e: React.FormEvent<EventTarget>): void => {
+      e.preventDefault();
+      dispatch({
+        type: LOG_IN_REQUEST,
+        data: {
+          id,
+          password,
+        },
+      });
+    },
+    [id, password],
+  );
   return (
     <Form onSubmit={onSubmitForm}>
       <div>
@@ -33,7 +43,7 @@ const LoginForm: React.FunctionComponent = () => {
         />
       </div>
       <div>
-        <Button type="primary" htmlType="submit" loading={false}>
+        <Button type="primary" htmlType="submit" loading={isLoggingIn}>
           Log In
         </Button>
         <Link href="/signup">

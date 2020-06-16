@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Input, Checkbox, Button } from 'antd';
 import { useDispatch } from 'react-redux';
-import { signUpAction } from '../reducers/user';
+import { SIGN_UP_REQUEST } from '../reducers/user';
 
 export const Form = styled.form`
   padding: 10;
@@ -50,12 +50,13 @@ const Signup: React.FunctionComponent = () => {
       if (!term) {
         setTermError(true);
       }
-      dispatch(
-        signUpAction({
+      dispatch({
+        type: SIGN_UP_REQUEST,
+        data: {
           id,
           password,
-        }),
-      );
+        },
+      });
     },
     [password, passwordCheck, term],
   );

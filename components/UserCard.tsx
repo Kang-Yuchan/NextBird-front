@@ -2,12 +2,14 @@ import * as React from 'react';
 import { Card, Avatar, Button } from 'antd';
 import { UserCardProps } from '../interface';
 import { useDispatch } from 'react-redux';
-import { logoutAction } from '../reducers/user';
+import { LOG_OUT_REQUEST } from '../reducers/user';
 
 const UserCard = ({ userData }: UserCardProps): React.ReactElement => {
   const dispatch = useDispatch();
   const onLogOut = React.useCallback(() => {
-    dispatch(logoutAction);
+    dispatch({
+      type: LOG_OUT_REQUEST,
+    });
   }, []);
   return (
     <Card

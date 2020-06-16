@@ -12,7 +12,7 @@ const InputSearch = styled(Input.Search)`
 `;
 
 const AppLayout = ({ children }: NodeProps): React.ReactNode => {
-  const { isLoggedIn, user } = useSelector((state) => state.user);
+  const { isLoggedIn, me } = useSelector((state) => state.user);
   return (
     <React.Fragment>
       <Menu mode="horizontal">
@@ -32,7 +32,7 @@ const AppLayout = ({ children }: NodeProps): React.ReactNode => {
       </Menu>
       <Row gutter={10}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? <UserCard userData={user} /> : <LoginForm />}
+          {isLoggedIn ? <UserCard userData={me} /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}

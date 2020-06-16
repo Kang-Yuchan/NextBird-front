@@ -1,4 +1,5 @@
-import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
+import { all, fork, takeLatest, call, put, delay } from 'redux-saga/effects';
+import Axios from 'axios';
 import {
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
@@ -13,6 +14,7 @@ import {
 
 function loginAPI() {
   //request to server
+  return Axios.post('/login');
 }
 
 function logoutAPI() {
@@ -25,7 +27,8 @@ function signUpAPI() {
 
 function* login(): Generator {
   try {
-    yield call(loginAPI);
+    //yield call(loginAPI);
+    yield delay(2000);
     yield put({
       type: LOG_IN_SUCCESS,
     });
