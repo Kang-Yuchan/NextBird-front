@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Input, Checkbox, Button } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SIGN_UP_REQUEST } from '../reducers/user';
 
 export const Form = styled.form`
@@ -35,6 +35,7 @@ const Signup: React.FunctionComponent = () => {
   const [passwordError, setPasswordError] = React.useState<boolean>(false);
   const [termError, setTermError] = React.useState<boolean>(false);
   const dispatch = useDispatch();
+  const { isSigningUp } = useSelector((state) => state.user);
 
   const onSubmit = React.useCallback(
     (e: React.FormEvent<EventTarget>): void => {
@@ -114,7 +115,7 @@ const Signup: React.FunctionComponent = () => {
           {termError && <ErrorMsg>Please check the term.</ErrorMsg>}
         </div>
         <SignupDiv>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isSigningUp}>
             Submit
           </Button>
         </SignupDiv>

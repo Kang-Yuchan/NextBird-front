@@ -36,13 +36,15 @@ function* login(): Generator {
     console.error(error);
     yield put({
       type: LOG_IN_FAILURE,
+      error: error,
     });
   }
 }
 
 function* logout(): Generator {
   try {
-    yield call(logoutAPI);
+    //yield call(logoutAPI);
+    yield delay(2000);
     yield put({
       type: LOG_OUT_SUCCESS,
     });
@@ -50,13 +52,15 @@ function* logout(): Generator {
     console.error(error);
     yield put({
       type: LOG_OUT_FAILURE,
+      error: error,
     });
   }
 }
 
 function* signUp(): Generator {
   try {
-    yield call(signUpAPI);
+    //yield call(signUpAPI);
+    yield delay(2000);
     yield put({
       type: SIGN_UP_SUCCESS,
     });
@@ -64,6 +68,7 @@ function* signUp(): Generator {
     console.error(error);
     yield put({
       type: SIGN_UP_FAILURE,
+      error: error,
     });
   }
 }
