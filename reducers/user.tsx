@@ -3,8 +3,7 @@ const dummyUser = {
   Post: [],
   Follwings: [],
   Followers: [],
-  isLoggedIn: false,
-  signUpData: {},
+  id: 1,
 };
 
 export const initialState = {

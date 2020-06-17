@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Router from 'next/router';
 import styled from 'styled-components';
 import { Input, Checkbox, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,7 +36,14 @@ const Signup: React.FunctionComponent = () => {
   const [passwordError, setPasswordError] = React.useState<boolean>(false);
   const [termError, setTermError] = React.useState<boolean>(false);
   const dispatch = useDispatch();
-  const { isSigningUp } = useSelector((state) => state.user);
+  const { isSigningUp, me } = useSelector((state) => state.user);
+
+  React.useEffect(() => {
+    if (me) {
+      alert('Go to main page because you are logged in.');
+      Router.push('/');
+    }
+  }, [me && me.id]);
 
   const onSubmit = React.useCallback(
     (e: React.FormEvent<EventTarget>): void => {

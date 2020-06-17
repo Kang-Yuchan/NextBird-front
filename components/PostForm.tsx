@@ -62,16 +62,14 @@ const PostForm = (): React.ReactElement => {
       </div>
       <div>
         {imagePaths.map(
-          (v: string): React.ReactElement => {
-            return (
-              <ImgDiv key={v}>
-                <Img src={`http://localhost:3065/` + v} alt={v} />
-                <div>
-                  <Button>Delete</Button>
-                </div>
-              </ImgDiv>
-            );
-          },
+          (v: string): React.ReactElement => (
+            <ImgDiv key={v}>
+              <Img src={`http://localhost:3065/${v}`} alt={v} />
+              <div>
+                <Button>Delete</Button>
+              </div>
+            </ImgDiv>
+          ),
         )}
       </div>
     </Form>
