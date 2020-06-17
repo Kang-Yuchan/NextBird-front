@@ -1,6 +1,7 @@
 export const initialState = {
   mainPosts: [
     {
+      id: 1,
       img: 'https://blog.f-arts.work/wp-content/uploads/2018/09/nextjs.png.webp',
       User: {
         id: 1,
@@ -8,21 +9,36 @@ export const initialState = {
       },
       content: 'I love Next.js ♥',
       createdAt: '2020-06-05',
-      comments: 'Next.js is fucking awesome!!',
+      comments: [],
     },
   ],
   imagePaths: [], // Preview image path
-  addPostErrorReason: false, // Post upload error reason
+  addPostErrorReason: '', // Post upload error reason
   isAddingPost: false, // Post uploading
   addedPost: false, // Post upload success
+  isAddingComment: false, // Comment uploading
+  addedComment: false, // Comment upload success
+  addCommentErrorReason: '',
 };
 
 const dummyPost = {
+  id: 2,
   User: {
     id: 1,
     name: 'yuchan',
   },
   content: 'I am a dummy',
+  comments: [],
+};
+
+const dummyComment = {
+  id: 1,
+  User: {
+    id: 2,
+    name: 'miku',
+  },
+  createdAt: new Date(),
+  content: 'I am dummy comment',
 };
 
 // ASYNCHRONOUS PATTERN
@@ -95,6 +111,34 @@ const reducer = (state = initialState, action) => {
         ...state,
         isAddingPost: false,
         addPostErrorReason: action.error,
+      };
+    }
+    case ADD_COMMENT_REQUEST: {
+      return {
+        ...state,
+        isAddingComment: true,
+        addCommentErrorReason: '',
+        addedComment: false,
+      };
+    }
+    case ADD_COMMENT_SUCCESS: {
+      const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
+      const post = state.mainPosts[postIndex];
+      const comments = [...post.comments, dummyComment];
+      const mainPosts = [...state.mainPosts];
+      mainPosts[postIndex] = { ...post, comments };
+      return {
+        ...state,
+        isAddingComment: false,
+        mainPosts,
+        addedComment: true,
+      };
+    }
+    case ADD_COMMENT_FAILURE: {
+      return {
+        ...state,
+        isAddingComment: false,
+        addCommentErrorReason: action.error,
       };
     }
     default: {

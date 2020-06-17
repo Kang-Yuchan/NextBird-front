@@ -20,20 +20,27 @@ type PostProps = {
 };
 
 const Post = ({ post }: PostProps): React.ReactElement => {
+  const { isAddingComment, addedComment } = useSelector((state) => state.post);
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [commentFormOpened, setCommentFormOpened] = React.useState<boolean>(false);
   const [commentText, setCommentText] = React.useState<string>('');
 
-  const onSubmitComment = React.useCallback((e) => {
-    e.preventDefault();
-    if (!me) {
-      return alert('Please log in.');
-    }
-    return dispatch({
-      type: ADD_COMMENT_REQUEST,
-    });
-  }, []);
+  const onSubmitComment = React.useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!me) {
+        return alert('Please log in.');
+      }
+      return dispatch({
+        type: ADD_COMMENT_REQUEST,
+        data: {
+          postId: post.id,
+        },
+      });
+    },
+    [me && me.id],
+  );
 
   const onToggleComment = React.useCallback(() => {
     setCommentFormOpened((prev) => !prev);
@@ -42,6 +49,10 @@ const Post = ({ post }: PostProps): React.ReactElement => {
   const onChangeComment = React.useCallback((e) => {
     setCommentText(e.target.value);
   }, []);
+
+  React.useEffect(() => {
+    setCommentText('');
+  }, [addedComment === true]);
 
   return (
     <React.Fragment>
@@ -68,7 +79,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
             <Form.Item>
               <Input.TextArea rows={4} value={commentText} onChange={onChangeComment} />
             </Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={isAddingComment}>
               Tweet
             </Button>
           </form>
@@ -82,7 +93,6 @@ const Post = ({ post }: PostProps): React.ReactElement => {
                   author={item.User.name}
                   avatar={<Avatar>{item.User.name[0]}</Avatar>}
                   content={item.content}
-                  datetime={item.createdAt}
                 />
               </li>
             )}

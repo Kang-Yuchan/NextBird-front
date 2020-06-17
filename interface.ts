@@ -33,6 +33,7 @@ export interface PostData {
 }
 
 export interface MainPost {
+  id: number;
   img: string;
   User: {
     id: number;
