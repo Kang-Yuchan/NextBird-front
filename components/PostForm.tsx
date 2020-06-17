@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Input, Button } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_POST_REQUEST } from '../reducers/post';
 
 const Form = styled.form`
   margin-bottom: 20px;
@@ -20,14 +21,42 @@ const Img = styled.img`
 `;
 
 const PostForm = (): React.ReactElement => {
-  const { imagePaths } = useSelector((state) => state.post);
+  const dispatch = useDispatch();
+  const [text, setText] = React.useState<string>('');
+  const { imagePaths, isAddingPost, addedPost } = useSelector((state) => state.post);
+
+  React.useEffect(() => {
+    setText('');
+  }, [addedPost === true]);
+
+  const onSubmitForm = React.useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch({
+        type: ADD_POST_REQUEST,
+        data: {
+          text: text,
+        },
+      });
+    },
+    [text],
+  );
+
+  const onChangeText = React.useCallback((e) => {
+    setText(e.target.value);
+  }, []);
   return (
-    <Form encType="multipart/form-data">
-      <Input.TextArea maxLength={140} placeholder="Let's Tweet!!"></Input.TextArea>
+    <Form encType="multipart/form-data" onSubmit={onSubmitForm}>
+      <Input.TextArea
+        maxLength={140}
+        placeholder="Let's Tweet!!"
+        value={text}
+        onChange={onChangeText}
+      ></Input.TextArea>
       <div>
         <input type="file" multiple hidden />
         <Button>Upload Image</Button>
-        <TweetBtn type="primary" htmlType="submit">
+        <TweetBtn type="primary" htmlType="submit" loading={isAddingPost}>
           Tweet
         </TweetBtn>
       </div>

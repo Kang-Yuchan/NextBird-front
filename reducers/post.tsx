@@ -13,6 +13,15 @@ export const initialState = {
   imagePaths: [], // Preview image path
   addPostErrorReason: false, // Post upload error reason
   isAddingPost: false, // Post uploading
+  addedPost: false, // Post upload success
+};
+
+const dummyPost = {
+  User: {
+    id: 1,
+    name: 'yuchan',
+  },
+  content: 'I am a dummy',
 };
 
 // ASYNCHRONOUS PATTERN
@@ -58,27 +67,33 @@ export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
 export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
 export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 
-const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
-const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
-const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST_REQUEST: {
       return {
         ...state,
+        isAddingPost: true,
+        addPostErrorReason: '',
+        addedPost: false,
       };
     }
     case ADD_POST_SUCCESS: {
       return {
         ...state,
-        mainPosts: [action.data, ...state.mainPosts],
+        isAddingPost: false,
+        mainPosts: [dummyPost, ...state.mainPosts],
+        addedPost: true,
       };
     }
     case ADD_POST_FAILURE: {
       return {
         ...state,
-        mainPosts: [action.data, ...state.mainPosts],
+        isAddingPost: false,
+        addPostErrorReason: action.error,
       };
     }
     default: {
