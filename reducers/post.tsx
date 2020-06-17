@@ -8,6 +8,7 @@ export const initialState = {
       },
       content: 'I love Next.js ♥',
       createdAt: '2020-06-05',
+      comments: 'Next.js is fucking awesome!!',
     },
   ],
   imagePaths: [], // Preview image path

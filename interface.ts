@@ -29,15 +29,7 @@ export interface UserCardProps {
 export interface PostData {
   isLoggedIn: boolean;
   imagePaths: Array<string>;
-  mainPosts: Array<{
-    img: string;
-    User: {
-      id: number;
-      name: string;
-    };
-    content: string;
-    createdAt: string;
-  }>;
+  mainPosts: MainPost;
 }
 
 export interface MainPost {
@@ -48,4 +40,5 @@ export interface MainPost {
   };
   content: string;
   createdAt: string;
+  comments: Array<string>;
 }
