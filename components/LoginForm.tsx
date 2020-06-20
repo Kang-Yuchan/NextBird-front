@@ -17,7 +17,7 @@ const LoginForm: React.FunctionComponent = () => {
       dispatch({
         type: LOG_IN_REQUEST,
         data: {
-          id,
+          userId: id,
           password,
         },
       });
