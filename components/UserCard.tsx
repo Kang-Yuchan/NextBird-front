@@ -17,21 +17,21 @@ const UserCard = ({ userData }: UserCardProps): React.ReactElement => {
         <div key="tweet">
           Tweet
           <br />
-          {userData.Post.length}
+          {userData.Posts.length}
         </div>,
         <div key="following">
           Following
           <br />
-          {userData.Post.length}
+          {userData.Followings.length}
         </div>,
         <div key="follower">
           Follower
           <br />
-          {userData.Post.length}
+          {userData.Followers.length}
         </div>,
       ]}
     >
-      <Card.Meta avatar={<Avatar>{userData.name[0]}</Avatar>} title={userData.name} />
+      <Card.Meta avatar={<Avatar>{userData.userId[0]}</Avatar>} title={userData.userId} />
       <Button onClick={onLogOut}>Log Out</Button>
     </Card>
   );
