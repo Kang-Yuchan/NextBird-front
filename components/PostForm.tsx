@@ -32,10 +32,13 @@ const PostForm = (): React.ReactElement => {
   const onSubmitForm = React.useCallback(
     (e) => {
       e.preventDefault();
+      if (!text || !text.trim()) {
+        return alert('Write post text!');
+      }
       dispatch({
         type: ADD_POST_REQUEST,
         data: {
-          content: text,
+          content: text.trim(),
         },
       });
     },
