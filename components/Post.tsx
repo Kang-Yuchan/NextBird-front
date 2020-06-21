@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { Card, Button, Avatar, Form, Input, List, Comment } from 'antd';
 import { MainPost } from '../interface';
@@ -70,7 +71,20 @@ const Post = ({ post }: PostProps): React.ReactElement => {
         <Card.Meta
           avatar={<Avatar>{post.User.userId[0]}</Avatar>}
           title={post.User.userId}
-          description={post.content}
+          description={
+            <div>
+              {post.content.split(/(#[^\s]+)/g).map((v, index) => {
+                if (v.match(/#[^\s]+/)) {
+                  return (
+                    <Link href="/hashtag" key={index}>
+                      <a>{v}</a>
+                    </Link>
+                  );
+                }
+                return v;
+              })}
+            </div>
+          }
         />
       </Card>
       {commentFormOpened && (
