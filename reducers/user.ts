@@ -1,13 +1,4 @@
-const dummyUser = {
-  name: 'kangyuchan',
-  Post: [],
-  Follwings: [],
-  Followers: [],
-  id: 1,
-};
-
 export const initialState = {
-  isLoggedIn: false, // Is Login?
   isLoggingOut: false, // Logout request
   isLoggingIn: false, // Login request
   logInErrorReason: '', // Login error reason
@@ -68,7 +59,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggingIn: false,
-        isLoggedIn: true,
         me: action.data,
         isLoading: false,
       };
@@ -77,7 +67,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggingIn: false,
-        isLoggedIn: false,
         me: null,
         logInErrorReason: action.error,
       };
@@ -85,8 +74,30 @@ const reducer = (state = initialState, action) => {
     case LOG_OUT_REQUEST: {
       return {
         ...state,
-        isLoggedIn: false,
+        isLoggingOut: true,
+      };
+    }
+    case LOG_OUT_SUCCESS: {
+      return {
+        ...state,
+        isLoggingOut: false,
         me: null,
+      };
+    }
+    case LOAD_USER_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+    case LOAD_USER_SUCCESS: {
+      return {
+        ...state,
+        me: action.data,
+      };
+    }
+    case LOAD_USER_FAILURE: {
+      return {
+        ...state,
       };
     }
     case SIGN_UP_REQUEST: {

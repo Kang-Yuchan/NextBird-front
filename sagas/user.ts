@@ -10,6 +10,9 @@ import {
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
   LOG_OUT_FAILURE,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
 } from '../reducers/user';
 
 Axios.defaults.baseURL = 'http://localhost:3065/api';
@@ -18,14 +21,6 @@ function loginAPI(loginData) {
   return Axios.post('/user/login', loginData, {
     withCredentials: true,
   });
-}
-
-function logoutAPI() {
-  //request to server
-}
-
-function signUpAPI(signUpData) {
-  return Axios.post('/user/', signUpData);
 }
 
 function* login(action): Generator {
@@ -44,10 +39,24 @@ function* login(action): Generator {
   }
 }
 
+function* watchLogin(): Generator {
+  yield takeLatest(LOG_IN_REQUEST, login);
+}
+
+function logoutAPI() {
+  //request to server
+  return Axios.post(
+    '/user/logout',
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+}
+
 function* logout(): Generator {
   try {
     yield call(logoutAPI);
-    yield delay(2000);
     yield put({
       type: LOG_OUT_SUCCESS,
     });
@@ -58,6 +67,41 @@ function* logout(): Generator {
       error: error,
     });
   }
+}
+
+function* watchLogout(): Generator {
+  yield takeLatest(LOG_OUT_REQUEST, logout);
+}
+
+function loadUserAPI() {
+  //request to server
+  return Axios.get('/user/', {
+    withCredentials: true,
+  });
+}
+
+function* loadUser(): Generator {
+  try {
+    const result = yield call(loadUserAPI);
+    yield put({
+      type: LOAD_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: LOAD_USER_FAILURE,
+      error: error,
+    });
+  }
+}
+
+function* watchLoadUser(): Generator {
+  yield takeLatest(LOAD_USER_REQUEST, loadUser);
+}
+
+function signUpAPI(signUpData) {
+  return Axios.post('/user/', signUpData);
 }
 
 function* signUp(action): Generator {
@@ -75,18 +119,10 @@ function* signUp(action): Generator {
   }
 }
 
-function* watchLogin(): Generator {
-  yield takeLatest(LOG_IN_REQUEST, login);
-}
-
-function* watchLogout(): Generator {
-  yield takeLatest(LOG_OUT_REQUEST, logout);
-}
-
 function* watchSignup(): Generator {
   yield takeLatest(SIGN_UP_REQUEST, signUp);
 }
 
 export default function* userSaga(): Generator {
-  yield all([fork(watchLogin), fork(watchLogout), fork(watchSignup)]);
+  yield all([fork(watchLogin), fork(watchLogout), fork(watchSignup), fork(watchLoadUser)]);
 }

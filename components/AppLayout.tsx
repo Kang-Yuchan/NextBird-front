@@ -5,14 +5,24 @@ import Link from 'next/link';
 import { NodeProps } from '../interface';
 import LoginForm from '../components/LoginForm';
 import UserCard from '../components/UserCard';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { LOAD_USER_REQUEST } from '../reducers/user';
 
 const InputSearch = styled(Input.Search)`
   vertical-align: middle;
 `;
 
 const AppLayout = ({ children }: NodeProps): React.ReactNode => {
-  const { isLoggedIn, me } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    if (!me) {
+      dispatch({
+        type: LOAD_USER_REQUEST,
+      });
+    }
+  }, []);
+
   return (
     <React.Fragment>
       <Menu mode="horizontal">
@@ -32,7 +42,7 @@ const AppLayout = ({ children }: NodeProps): React.ReactNode => {
       </Menu>
       <Row gutter={10}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? <UserCard userData={me} /> : <LoginForm />}
+          {me ? <UserCard userData={me} /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}
