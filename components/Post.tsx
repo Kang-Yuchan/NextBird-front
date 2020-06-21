@@ -68,8 +68,8 @@ const Post = ({ post }: PostProps): React.ReactElement => {
         extra={<Button>Follow</Button>}
       >
         <Card.Meta
-          avatar={<Avatar>{post.User.name[0]}</Avatar>}
-          title={post.User.name}
+          avatar={<Avatar>{post.User.userId[0]}</Avatar>}
+          title={post.User.userId}
           description={post.content}
         />
       </Card>
@@ -90,8 +90,8 @@ const Post = ({ post }: PostProps): React.ReactElement => {
             renderItem={(item) => (
               <li>
                 <Comment
-                  author={item.User.name}
-                  avatar={<Avatar>{item.User.name[0]}</Avatar>}
+                  author={item.User.userId}
+                  avatar={<Avatar>{item.User.userId[0]}</Avatar>}
                   content={item.content}
                 />
               </li>

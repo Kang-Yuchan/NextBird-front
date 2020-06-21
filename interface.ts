@@ -37,7 +37,7 @@ export interface MainPost {
   img: string;
   User: {
     id: number;
-    name: string;
+    userId: string;
   };
   content: string;
   createdAt: string;

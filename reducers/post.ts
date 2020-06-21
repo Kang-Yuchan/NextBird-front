@@ -5,7 +5,7 @@ export const initialState = {
       img: 'https://blog.f-arts.work/wp-content/uploads/2018/09/nextjs.png.webp',
       User: {
         id: 1,
-        name: 'kangyuchan',
+        userId: 'kangyuchan',
       },
       content: 'I love Next.js ♥',
       createdAt: '2020-06-05',
@@ -25,7 +25,7 @@ const dummyPost = {
   id: 2,
   User: {
     id: 1,
-    name: 'yuchan',
+    userId: 'yuchan',
   },
   content: 'I am a dummy',
   comments: [],
@@ -35,7 +35,7 @@ const dummyComment = {
   id: 1,
   User: {
     id: 2,
-    name: 'miku',
+    userId: 'miku',
   },
   createdAt: new Date(),
   content: 'I am dummy comment',
@@ -102,7 +102,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isAddingPost: false,
-        mainPosts: [dummyPost, ...state.mainPosts],
+        mainPosts: [action.data, ...state.mainPosts],
         addedPost: true,
       };
     }

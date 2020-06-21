@@ -15,8 +15,6 @@ import {
   LOAD_USER_FAILURE,
 } from '../reducers/user';
 
-Axios.defaults.baseURL = 'http://localhost:3065/api';
-
 function loginAPI(loginData) {
   return Axios.post('/user/login', loginData, {
     withCredentials: true,

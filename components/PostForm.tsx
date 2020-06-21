@@ -35,7 +35,7 @@ const PostForm = (): React.ReactElement => {
       dispatch({
         type: ADD_POST_REQUEST,
         data: {
-          text: text,
+          content: text,
         },
       });
     },
@@ -52,7 +52,7 @@ const PostForm = (): React.ReactElement => {
         placeholder="Let's Tweet!!"
         value={text}
         onChange={onChangeText}
-      ></Input.TextArea>
+      />
       <div>
         <input type="file" multiple hidden />
         <Button>Upload Image</Button>

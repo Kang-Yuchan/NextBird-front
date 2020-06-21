@@ -4,12 +4,12 @@ import Post from '../components/Post';
 import { useSelector } from 'react-redux';
 
 const Home: React.FunctionComponent = () => {
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
   const { mainPosts } = useSelector((state) => state.post);
 
   return (
     <React.Fragment>
-      {isLoggedIn && <PostForm />}
+      {me && <PostForm />}
       {mainPosts.map((post) => {
         return <Post post={post} key={`${post}`} />;
       })}
