@@ -9,6 +9,12 @@ import {
   LOAD_MAIN_POSTS_REQUEST,
   LOAD_MAIN_POSTS_SUCCESS,
   LOAD_MAIN_POSTS_FAILURE,
+  LOAD_HASHTAG_POSTS_REQUEST,
+  LOAD_HASHTAG_POSTS_SUCCESS,
+  LOAD_HASHTAG_POSTS_FAILURE,
+  LOAD_USER_POSTS_REQUEST,
+  LOAD_USER_POSTS_SUCCESS,
+  LOAD_USER_POSTS_FAILURE,
 } from '../reducers/post';
 import Axios from 'axios';
 
@@ -89,6 +95,60 @@ function* watchLoadPosts(): Generator {
   yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadMainPosts);
 }
 
+function loadUserPostsAPI(id) {
+  return Axios.get(`/user/${id}/posts`);
+}
+
+function* loadUserPosts(action): Generator {
+  try {
+    const result = yield call(loadUserPostsAPI, action.data);
+    yield put({
+      type: LOAD_USER_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: LOAD_USER_POSTS_FAILURE,
+      error: error,
+    });
+  }
+}
+
+function* watchLoadUserPosts(): Generator {
+  yield takeLatest(LOAD_USER_POSTS_REQUEST, loadUserPosts);
+}
+
+function loadHashtagPostsAPI(tag) {
+  return Axios.get(`/hashtag/${tag}`);
+}
+
+function* loadHashtagPosts(action): Generator {
+  try {
+    const result = yield call(loadHashtagPostsAPI, action.data);
+    yield put({
+      type: LOAD_HASHTAG_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: LOAD_HASHTAG_POSTS_FAILURE,
+      error: error,
+    });
+  }
+}
+
+function* watchLoadHashtagPosts(): Generator {
+  yield takeLatest(LOAD_HASHTAG_POSTS_REQUEST, loadHashtagPosts);
+}
+
 export default function* postSaga(): Generator {
-  yield all([fork(watchAddPost), fork(watchAddComment), fork(watchLoadPosts)]);
+  yield all([
+    fork(watchAddPost),
+    fork(watchAddComment),
+    fork(watchLoadPosts),
+    fork(watchLoadHashtagPosts),
+    fork(watchLoadUserPosts),
+  ]);
 }

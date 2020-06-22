@@ -1,4 +1,4 @@
-import { all, fork, takeLatest, call, put, delay } from 'redux-saga/effects';
+import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
 import Axios from 'axios';
 import {
   LOG_IN_REQUEST,
@@ -71,19 +71,20 @@ function* watchLogout(): Generator {
   yield takeLatest(LOG_OUT_REQUEST, logout);
 }
 
-function loadUserAPI() {
+function loadUserAPI(userId: number) {
   //request to server
-  return Axios.get('/user/', {
+  return Axios.get(userId ? `/user/${userId}` : '/user/', {
     withCredentials: true,
   });
 }
 
-function* loadUser(): Generator {
+function* loadUser(action): Generator {
   try {
-    const result = yield call(loadUserAPI);
+    const result = yield call(loadUserAPI, action.data);
     yield put({
       type: LOAD_USER_SUCCESS,
       data: result.data,
+      me: !action.data,
     });
   } catch (error) {
     console.error(error);

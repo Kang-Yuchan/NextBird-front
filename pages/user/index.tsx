@@ -31,17 +31,17 @@ const User = ({ id }: ContextProps) => {
             <div key="tweet">
               Tweet
               <br />
-              {userInfo.Posts.length}
+              {userInfo.Posts}
             </div>,
             <div key="following">
               Following
               <br />
-              {userInfo.Followings.length}
+              {userInfo.Followings}
             </div>,
             <div key="follower">
               Follower
               <br />
-              {userInfo.Followers.length}
+              {userInfo.Followers}
             </div>,
           ]}
         >
