@@ -2,7 +2,6 @@ import * as React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Card, Button, Avatar, Form, Input, List, Comment } from 'antd';
-import { MainPost } from '../interface';
 import {
   RetweetOutlined,
   HeartOutlined,
@@ -72,8 +71,9 @@ const Post = ({ post }: PostProps): React.ReactElement => {
             <div>
               {post.content.split(/(#[^\s]+)/g).map((v, index) => {
                 if (v.match(/#[^\s]+/)) {
+                  console.log(v.slice(1));
                   return (
-                    <Link href="/hashtag" key={index}>
+                    <Link href={`/hashtag/${v.slice(1)}`} key={index}>
                       <a>{v}</a>
                     </Link>
                   );
