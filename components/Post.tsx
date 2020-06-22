@@ -71,7 +71,6 @@ const Post = ({ post }: PostProps): React.ReactElement => {
             <div>
               {post.content.split(/(#[^\s]+)/g).map((v, index) => {
                 if (v.match(/#[^\s]+/)) {
-                  console.log(v.slice(1));
                   return (
                     <Link href={`/hashtag/${v.slice(1)}`} key={index}>
                       <a>{v}</a>

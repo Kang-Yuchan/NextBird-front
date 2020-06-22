@@ -1,7 +1,5 @@
-import * as React from 'react';
-
-const Hashtag: React.FunctionComponent = () => {
-  return <div>Hashtag</div>;
+const Hashtag = (): void => {
+	return;
 };
 
 export default Hashtag;
