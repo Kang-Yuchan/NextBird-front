@@ -9,15 +9,11 @@ import {
   EllipsisOutlined,
 } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { ADD_COMMENT_REQUEST } from '../reducers/post';
+import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST } from '../reducers/post';
 import { PostProps } from '../pages';
 
 const CoverImg = styled.img`
   border: 1px solid #f0f0f0;
-`;
-
-const TweetTextArea = styled(Input.TextArea)`
-  margin-bottom: 20px;
 `;
 
 const PostCard = styled(Card)`
@@ -41,14 +37,21 @@ const Post = ({ post }: PostProps): React.ReactElement => {
         type: ADD_COMMENT_REQUEST,
         data: {
           postId: post.id,
+          content: commentText,
         },
       });
     },
-    [me && me.id],
+    [me && me.id, commentText],
   );
 
   const onToggleComment = React.useCallback(() => {
     setCommentFormOpened((prev) => !prev);
+    if (!commentFormOpened) {
+      dispatch({
+        type: LOAD_COMMENTS_REQUEST,
+        data: post.id,
+      });
+    }
   }, []);
 
   const onChangeComment = React.useCallback((e) => {
@@ -111,13 +114,13 @@ const Post = ({ post }: PostProps): React.ReactElement => {
               <Input.TextArea rows={4} value={commentText} onChange={onChangeComment} />
             </Form.Item>
             <Button type="primary" htmlType="submit" loading={isAddingComment}>
-              Tweet
+              ✉️
             </Button>
           </form>
           <List
-            header={`${post.comments ? post.comments.length : 0} Comments`}
+            header={`${post.Comments ? post.Comments.length : 0} Comments`}
             itemLayout="horizontal"
-            dataSource={post.comments || []}
+            dataSource={post.Comments || []}
             renderItem={(item) => (
               <li>
                 <Comment

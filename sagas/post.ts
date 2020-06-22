@@ -15,6 +15,9 @@ import {
   LOAD_USER_POSTS_REQUEST,
   LOAD_USER_POSTS_SUCCESS,
   LOAD_USER_POSTS_FAILURE,
+  LOAD_COMMENTS_SUCCESS,
+  LOAD_COMMENTS_FAILURE,
+  LOAD_COMMENTS_REQUEST,
 } from '../reducers/post';
 import Axios from 'axios';
 
@@ -44,18 +47,24 @@ function* watchAddPost(): Generator {
   yield takeLatest(ADD_POST_REQUEST, addPost);
 }
 
-function addCommentAPI() {
-  // request to server
+function addCommentAPI(data) {
+  return Axios.post(
+    `/post/${data.postId}/comment`,
+    { content: data.content },
+    {
+      withCredentials: true,
+    },
+  );
 }
 
 function* addComment(action): Generator {
   try {
-    //yield call(addCommentAPI);
-    yield delay(2000);
+    const result = yield call(addCommentAPI, action.data);
     yield put({
       type: ADD_COMMENT_SUCCESS,
       data: {
         postId: action.data.postId,
+        comment: result.data,
       },
     });
   } catch (error) {
@@ -69,6 +78,33 @@ function* addComment(action): Generator {
 
 function* watchAddComment(): Generator {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
+}
+
+function loadCommentsAPI(postId: number) {
+  return Axios.get(`/post/${postId}/comments`);
+}
+
+function* loadComments(action): Generator {
+  try {
+    const result = yield call(loadCommentsAPI, action.data);
+    yield put({
+      type: LOAD_COMMENTS_SUCCESS,
+      data: {
+        postId: action.data,
+        comments: result.data,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: LOAD_COMMENTS_FAILURE,
+      error: error,
+    });
+  }
+}
+
+function* watchLoadComments(): Generator {
+  yield takeLatest(LOAD_COMMENTS_REQUEST, loadComments);
 }
 
 function loadMainPostsAPI() {
@@ -150,5 +186,6 @@ export default function* postSaga(): Generator {
     fork(watchLoadPosts),
     fork(watchLoadHashtagPosts),
     fork(watchLoadUserPosts),
+    fork(watchLoadComments),
   ]);
 }
