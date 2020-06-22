@@ -3,6 +3,11 @@ import PostForm from '../components/PostForm';
 import Post from '../components/Post';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_MAIN_POSTS_REQUEST } from '../reducers/post';
+import { MainPost } from '../interface';
+
+export type PostProps = {
+  post: MainPost;
+};
 
 const Home: React.FunctionComponent = () => {
   const { me } = useSelector((state) => state.user);
@@ -18,8 +23,8 @@ const Home: React.FunctionComponent = () => {
   return (
     <React.Fragment>
       {me && <PostForm />}
-      {mainPosts.map((post) => {
-        return <Post post={post} key={`${post}`} />;
+      {mainPosts.map((post: PostProps, index: number) => {
+        return <Post post={post} key={index} />;
       })}
     </React.Fragment>
   );

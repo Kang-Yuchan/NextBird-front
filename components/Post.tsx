@@ -11,14 +11,11 @@ import {
 } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { ADD_COMMENT_REQUEST } from '../reducers/post';
+import { PostProps } from '../pages';
 
 const CoverImg = styled.img`
   border: 1px solid #f0f0f0;
 `;
-
-type PostProps = {
-  post: MainPost;
-};
 
 const Post = ({ post }: PostProps): React.ReactElement => {
   const { isAddingComment, addedComment } = useSelector((state) => state.post);
