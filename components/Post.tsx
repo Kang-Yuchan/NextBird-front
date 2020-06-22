@@ -16,6 +16,14 @@ const CoverImg = styled.img`
   border: 1px solid #f0f0f0;
 `;
 
+const TweetTextArea = styled(Input.TextArea)`
+  margin-bottom: 20px;
+`;
+
+const PostCard = styled(Card)`
+  margin-bottom: 20px;
+`;
+
 const Post = ({ post }: PostProps): React.ReactElement => {
   const { isAddingComment, addedComment } = useSelector((state) => state.post);
   const { me } = useSelector((state) => state.user);
@@ -53,7 +61,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 
   return (
     <React.Fragment>
-      <Card
+      <PostCard
         key={post.createdAt}
         cover={post.img && <CoverImg alt="example" src={post.img} />}
         actions={[
@@ -65,14 +73,27 @@ const Post = ({ post }: PostProps): React.ReactElement => {
         extra={<Button>Follow</Button>}
       >
         <Card.Meta
-          avatar={<Avatar>{post.User.userId[0]}</Avatar>}
+          avatar={
+            <Link
+              href={{ pathname: `/user`, query: { id: post.User.id } }}
+              as={`/user/${post.User.id}`}
+            >
+              <a>
+                <Avatar>{post.User.userId[0]}</Avatar>
+              </a>
+            </Link>
+          }
           title={post.User.userId}
           description={
             <div>
               {post.content.split(/(#[^\s]+)/g).map((v, index) => {
                 if (v.match(/#[^\s]+/)) {
                   return (
-                    <Link href={`/hashtag/${v.slice(1)}`} key={index}>
+                    <Link
+                      href={{ pathname: `/hashtag`, query: { tag: v.slice(1) } }}
+                      as={`/user/${v.slice(1)}`}
+                      key={index}
+                    >
                       <a>{v}</a>
                     </Link>
                   );
@@ -82,7 +103,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
             </div>
           }
         />
-      </Card>
+      </PostCard>
       {commentFormOpened && (
         <React.Fragment>
           <form onSubmit={onSubmitComment}>
@@ -101,7 +122,16 @@ const Post = ({ post }: PostProps): React.ReactElement => {
               <li>
                 <Comment
                   author={item.User.userId}
-                  avatar={<Avatar>{item.User.userId[0]}</Avatar>}
+                  avatar={
+                    <Link
+                      href={{ pathname: `/user`, query: { id: item.User.id } }}
+                      as={`/user/${item.User.id}`}
+                    >
+                      <a>
+                        <Avatar>{item.User.userId[0]}</Avatar>
+                      </a>
+                    </Link>
+                  }
                   content={item.content}
                 />
               </li>

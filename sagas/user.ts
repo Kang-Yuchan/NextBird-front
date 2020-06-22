@@ -1,4 +1,4 @@
-import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
+import { all, fork, takeLatest, takeEvery, call, put } from 'redux-saga/effects';
 import Axios from 'axios';
 import {
   LOG_IN_REQUEST,
@@ -96,7 +96,7 @@ function* loadUser(action): Generator {
 }
 
 function* watchLoadUser(): Generator {
-  yield takeLatest(LOAD_USER_REQUEST, loadUser);
+  yield takeEvery(LOAD_USER_REQUEST, loadUser);
 }
 
 function signUpAPI(signUpData) {

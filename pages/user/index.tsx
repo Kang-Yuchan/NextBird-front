@@ -13,6 +13,7 @@ const User = ({ id }: ContextProps) => {
   const dispatch = useDispatch();
   const { mainPosts } = useSelector((state) => state.post);
   const { userInfo } = useSelector((state) => state.user);
+
   React.useEffect(() => {
     dispatch({
       type: LOAD_USER_REQUEST,

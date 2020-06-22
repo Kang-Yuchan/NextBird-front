@@ -8,6 +8,10 @@ const Form = styled.form`
   margin-bottom: 20px;
 `;
 
+const TweetTextArea = styled(Input.TextArea)`
+  margin-bottom: 20px;
+`;
+
 const TweetBtn = styled(Button)`
   float: right;
 `;
@@ -50,7 +54,7 @@ const PostForm = (): React.ReactElement => {
   }, []);
   return (
     <Form encType="multipart/form-data" onSubmit={onSubmitForm}>
-      <Input.TextArea
+      <TweetTextArea
         maxLength={140}
         placeholder="Let's Tweet!!"
         value={text}
