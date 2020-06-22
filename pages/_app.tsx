@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import { ComponentProps } from '../interface';
@@ -21,6 +21,15 @@ const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactN
       </AppLayout>
     </Provider>
   );
+};
+
+NextBird.getInitialProps = async (context) => {
+  const { ctx } = context;
+  let pageProps = {};
+  if (context.Component.getInitialProps) {
+    pageProps = await context.Component.getInitialProps(ctx);
+  }
+  return { pageProps };
 };
 
 const configureStore = (initialState, options) => {
