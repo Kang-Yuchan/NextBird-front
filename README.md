@@ -28,7 +28,7 @@
 
 ## TODO
 
-- [ ] Image upload with multer
+- [x] Image upload with multer
 - [ ] Performance optimization
 - [ ] SEO
 - [ ] Locale EN/JP/KR
