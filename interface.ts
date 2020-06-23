@@ -2,44 +2,69 @@ import { AppProps } from 'next/app';
 import { Store } from 'redux';
 
 export type ComponentProps = {
-  Component: AppProps;
-  pageProps: AppProps;
-  store: Store<string>;
+	Component: AppProps;
+	pageProps: AppProps;
+	store: Store<string>;
 };
 
 export interface NodeProps {
-  children: {
-    Component: ComponentProps;
-    pageProps: ComponentProps;
-  };
+	children: {
+		Component: ComponentProps;
+		pageProps: ComponentProps;
+	};
 }
 
 export interface UserData {
-  userId: string;
-  Posts: Array<string>;
-  Followings: Array<string>;
-  Followers: Array<string>;
-  isLoggedIn: boolean;
+	userId: string;
+	Posts: Array<string>;
+	Followings: Array<string>;
+	Followers: Array<string>;
+	isLoggedIn: boolean;
 }
 
 export interface UserCardProps {
-  userData: UserData;
+	userData: UserData;
 }
 
 export interface PostData {
-  isLoggedIn: boolean;
-  imagePaths: Array<string>;
-  mainPosts: MainPost;
+	isLoggedIn: boolean;
+	imagePaths: Array<string>;
+	mainPosts: MainPost;
 }
 
 export interface MainPost {
-  id: number;
-  img: string;
-  User: {
-    id: number;
-    userId: string;
-  };
-  content: string;
-  createdAt: string;
-  comments: Array<string>;
+	Comments: Array<CommentItem>;
+	Images: Array<Images>;
+	RetweetId: null;
+	User: {
+		id: number;
+		userId: string;
+	};
+	UserId: number;
+	content: string;
+	createdAt: string;
+	id: number;
+	updatedAt: string;
+}
+
+export interface Images {
+	PostId: number;
+	createdAt: string;
+	id: number;
+	src: string;
+	updatedAt: string;
+}
+
+export interface CommentItem {
+	PostId: number;
+	User: {
+		id: number;
+		userId: string;
+	};
+	UserId: number;
+	content: string;
+	createdAt: string;
+	id: number;
+	updatedAt: string;
+	Comments: Array<string>;
 }

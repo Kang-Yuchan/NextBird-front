@@ -6,6 +6,8 @@ import { RetweetOutlined, HeartOutlined, MessageOutlined, EllipsisOutlined } fro
 import { useSelector, useDispatch } from 'react-redux';
 import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST } from '../reducers/post';
 import { PostProps } from '../pages';
+import { CommentItem } from '../interface';
+import PostImages from './PostImages';
 
 const CoverImg = styled.img`border: 1px solid #f0f0f0;`;
 
@@ -62,7 +64,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 		<React.Fragment>
 			<PostCard
 				key={post.createdAt}
-				cover={post.img && <CoverImg alt="example" src={post.img} />}
+				cover={post.Images[0] && <PostImages images={post.Images} />}
 				actions={[
 					<RetweetOutlined key="retweet" />,
 					<HeartOutlined key="heart" />,
@@ -114,7 +116,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 						header={`${post.Comments ? post.Comments.length : 0} Comments`}
 						itemLayout="horizontal"
 						dataSource={post.Comments || []}
-						renderItem={(item) => (
+						renderItem={(item: CommentItem) => (
 							<li>
 								<Comment
 									author={item.User.userId}
