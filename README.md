@@ -19,7 +19,7 @@
 
 * React.js(Hooks): https://reactjs.org/
 * TypeScript(tsx): https://www.typescriptlang.org/
-* styled-component(CSS in JS): https://styled-components.com/
+* styled-components(CSS in JS): https://styled-components.com/
 * Ant Design(CSS Framework): https://ant.design/
 * Next.js(Static Site Generator, Server Side Rendering): https://nextjs.org/
 * Redux(State Management): https://redux.js.org/
@@ -29,6 +29,10 @@
 ## TODO
 
 - [x] Image upload with multer
+- [ ] Image slide
+- [ ] Post like & like cancle
+- [ ] Retweet
+- [ ] Follow & Unfollow
 - [ ] Performance optimization
 - [ ] SEO
 - [ ] Locale EN/JP/KR
