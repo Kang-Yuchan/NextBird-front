@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to nextbird-front 👋</h1>
+<h1 align="center">Welcome to NextBird-front 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
@@ -12,6 +12,19 @@
 > SNS app front build with Next.js, Redux, Redux-saga
 
 ### 🏠 [Homepage](https://github.com/Kang-Yuchan/NextBird-front)
+
+## Stacks
+
+💻 **MODERN FRONTEND STACKS**
+
+* React.js(Hooks): https://reactjs.org/
+* TypeScript(tsx): https://www.typescriptlang.org/
+* styled-component(CSS in JS): https://styled-components.com/
+* Ant Design(CSS Framework): https://ant.design/
+* Next.js(Static Site Generator, Server Side Rendering): https://nextjs.org/
+* Redux(State Management): https://redux.js.org/
+* Redux-Saga(Redux Middleware for asynchronous processing): https://redux-saga.js.org/
+* Express(Frontend nodejs server for Dynamic Routing): https://expressjs.com/
 
 ## Install
 
@@ -35,9 +48,13 @@ yarn dev
 * Twitter: [@chakotama2](https://twitter.com/chakotama2)
 * Github: [@Kang-Yuchan](https://github.com/Kang-Yuchan)
 
+## TODO
+
+- [ ] Code Optimization
+- [ ] SEO
+- [ ] Type error fix
+- [ ] Dynamic Routing using next/route
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
