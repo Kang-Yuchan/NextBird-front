@@ -26,6 +26,15 @@
 * Redux-Saga(Redux Middleware for asynchronous processing): https://redux-saga.js.org/
 * Express(Frontend nodejs server for Dynamic Routing): https://expressjs.com/
 
+## TODO
+
+- [ ] Image upload with multer
+- [ ] Performance optimization
+- [ ] SEO
+- [ ] Locale EN/JP/KR
+- [ ] Type error fix
+- [ ] Express change to next/route
+
 ## Install
 
 ```sh
@@ -47,13 +56,6 @@ yarn dev
 * Website: https://kang-yuchan.github.io/portfolio_2020/
 * Twitter: [@chakotama2](https://twitter.com/chakotama2)
 * Github: [@Kang-Yuchan](https://github.com/Kang-Yuchan)
-
-## TODO
-
-- [ ] Code Optimization
-- [ ] SEO
-- [ ] Type error fix
-- [ ] Dynamic Routing using next/route
 
 ## Show your support
 
