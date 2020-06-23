@@ -22,6 +22,8 @@ npm install
 ## Usage
 
 ```sh
+npm run dev
+or
 yarn dev
 ```
 
