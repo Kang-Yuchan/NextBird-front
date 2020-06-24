@@ -30,7 +30,7 @@
 
 - [x] Image upload with multer
 - [x] Image slide
-- [ ] Post like & like cancle
+- [x] Post like & like cancle
 - [ ] Retweet
 - [ ] Follow & Unfollow
 - [ ] Performance optimization

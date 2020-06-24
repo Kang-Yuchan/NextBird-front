@@ -2,9 +2,9 @@ import * as React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Card, Button, Avatar, Form, Input, List, Comment } from 'antd';
-import { RetweetOutlined, HeartOutlined, MessageOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { RetweetOutlined, MessageOutlined, EllipsisOutlined, HeartTwoTone, HeartOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST } from '../reducers/post';
+import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST, UNLIKE_POST_REQUEST, LIKE_POST_REQUEST } from '../reducers/post';
 import { PostProps } from '../pages';
 import { CommentItem } from '../interface';
 import PostImages from './PostImages';
@@ -19,6 +19,15 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 	const dispatch = useDispatch();
 	const [ commentFormOpened, setCommentFormOpened ] = React.useState<boolean>(false);
 	const [ commentText, setCommentText ] = React.useState<string>('');
+
+	const liked = me && post.Likers && post.Likers.find((v) => v.id == me.id);
+
+	React.useEffect(
+		() => {
+			setCommentText('');
+		},
+		[ addedComment === true ]
+	);
 
 	const onSubmitComment = React.useCallback(
 		(e) => {
@@ -51,11 +60,24 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 		setCommentText(e.target.value);
 	}, []);
 
-	React.useEffect(
+	const onToggleLike = React.useCallback(
 		() => {
-			setCommentText('');
+			if (!me) {
+				return alert('Please log in.');
+			}
+			if (liked) {
+				return dispatch({
+					type: UNLIKE_POST_REQUEST,
+					data: post.id
+				});
+			} else {
+				return dispatch({
+					type: LIKE_POST_REQUEST,
+					data: post.id
+				});
+			}
 		},
-		[ addedComment === true ]
+		[ me && me.id, post && post.id, liked ]
 	);
 
 	return (
@@ -65,7 +87,11 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 				cover={post.Images[0] && <PostImages images={post.Images} />}
 				actions={[
 					<RetweetOutlined key="retweet" />,
-					<HeartOutlined key="heart" />,
+					liked ? (
+						<HeartTwoTone key="heart" onClick={onToggleLike} twoToneColor="#eb2f96" />
+					) : (
+						<HeartOutlined key="heart" onClick={onToggleLike} />
+					),
 					<MessageOutlined key="message" onClick={onToggleComment} />,
 					<EllipsisOutlined key="ellipsis" />
 				]}

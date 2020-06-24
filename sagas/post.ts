@@ -20,7 +20,13 @@ import {
 	LOAD_COMMENTS_REQUEST,
 	UPLOAD_IMAGES_REQUEST,
 	UPLOAD_IMAGES_SUCCESS,
-	UPLOAD_IMAGES_FAILURE
+	UPLOAD_IMAGES_FAILURE,
+	LIKE_POST_REQUEST,
+	LIKE_POST_SUCCESS,
+	LIKE_POST_FAILURE,
+	UNLIKE_POST_REQUEST,
+	UNLIKE_POST_SUCCESS,
+	UNLIKE_POST_FAILURE
 } from '../reducers/post';
 import Axios from 'axios';
 
@@ -208,6 +214,68 @@ function* watchUploadImages(): Generator {
 	yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages);
 }
 
+function unlikePostAPI(postId) {
+	return Axios.delete(`/post/${postId}/like`, {
+		withCredentials: true
+	});
+}
+
+function* unlikePost(action): Generator {
+	try {
+		const result = yield call(unlikePostAPI, action.data);
+		yield put({
+			type: UNLIKE_POST_SUCCESS,
+			data: {
+				postId: action.data,
+				userId: result.data.userId
+			}
+		});
+	} catch (e) {
+		console.error(e);
+		yield put({
+			type: UNLIKE_POST_FAILURE,
+			error: e
+		});
+	}
+}
+
+function* watchUnlikePost(): Generator {
+	yield takeLatest(UNLIKE_POST_REQUEST, unlikePost);
+}
+
+function likePostAPI(postId) {
+	return Axios.post(
+		`/post/${postId}/like`,
+		{},
+		{
+			withCredentials: true
+		}
+	);
+}
+
+function* likePost(action): Generator {
+	try {
+		const result = yield call(likePostAPI, action.data);
+		yield put({
+			type: LIKE_POST_SUCCESS,
+			data: {
+				postId: action.data,
+				userId: result.data.userId
+			}
+		});
+	} catch (error) {
+		console.error(error);
+		yield put({
+			type: LIKE_POST_FAILURE,
+			error: error
+		});
+	}
+}
+
+function* watchLikePost(): Generator {
+	yield takeLatest(LIKE_POST_REQUEST, likePost);
+}
+
 export default function* postSaga(): Generator {
 	yield all([
 		fork(watchAddPost),
@@ -216,6 +284,8 @@ export default function* postSaga(): Generator {
 		fork(watchLoadHashtagPosts),
 		fork(watchLoadUserPosts),
 		fork(watchLoadComments),
-		fork(watchUploadImages)
+		fork(watchUploadImages),
+		fork(watchLikePost),
+		fork(watchUnlikePost)
 	]);
 }

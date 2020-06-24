@@ -34,6 +34,9 @@ export interface PostData {
 
 export interface MainPost {
 	Comments: Array<CommentItem>;
+	Likers: Array<{
+		id: number;
+	}>;
 	Images: Array<Images>;
 	RetweetId: null;
 	User: {
