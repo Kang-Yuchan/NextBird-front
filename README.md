@@ -29,7 +29,7 @@
 ## TODO
 
 - [x] Image upload with multer
-- [ ] Image slide
+- [x] Image slide
 - [ ] Post like & like cancle
 - [ ] Retweet
 - [ ] Follow & Unfollow
