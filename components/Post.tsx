@@ -9,8 +9,6 @@ import { PostProps } from '../pages';
 import { CommentItem } from '../interface';
 import PostImages from './PostImages';
 
-const CoverImg = styled.img`border: 1px solid #f0f0f0;`;
-
 const PostCard = styled(Card)`
   margin-bottom: 20px;
 `;

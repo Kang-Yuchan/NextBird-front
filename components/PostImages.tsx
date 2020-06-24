@@ -2,17 +2,20 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Images } from '../interface';
 import { PlusOutlined } from '@ant-design/icons';
+import ImagesZoom from './ImagesZoom';
 
 const borderStyle = '1px solid #f0f0f0';
 
 const SingleImg = styled.img`border: ${borderStyle};`;
 
 const DobleImg = styled.img`
-	border: ${borderStyle};
+	border-right: ${borderStyle};
 	width: 50%;
 `;
 
-const OverImgs = styled.div`
+const BorderDiv = styled.div`border: ${borderStyle};`;
+
+const OverTripleImgs = styled.div`
 	display: inline-block;
 	width: 50%;
 	text-align: center;
@@ -23,27 +26,48 @@ interface PostImagesProps {
 	images: Array<Images>;
 }
 
-const PostImages = ({ images }: PostImagesProps) => {
+const PostImages = ({ images }: PostImagesProps): React.ReactElement => {
+	const [ showImagesZoom, setShowImagesZoom ] = React.useState<boolean>(false);
+
+	const onZoom = React.useCallback(() => {
+		setShowImagesZoom(true);
+	}, []);
+
+	const onClose = React.useCallback(() => {
+		setShowImagesZoom(false);
+	}, []);
+
 	if (images.length === 1) {
-		return <SingleImg src={`http://localhost:3065/${images[0].src}`} />;
+		return (
+			<React.Fragment>
+				<SingleImg src={`http://localhost:3065/${images[0].src}`} onClick={onZoom} />
+				{showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
+			</React.Fragment>
+		);
 	}
 	if (images.length === 2) {
 		return (
-			<div>
-				<DobleImg src={`http://localhost:3065/${images[0].src}`} />
-				<DobleImg src={`http://localhost:3065/${images[1].src}`} />
-			</div>
+			<React.Fragment>
+				<BorderDiv>
+					<DobleImg src={`http://localhost:3065/${images[0].src}`} onClick={onZoom} />
+					<DobleImg src={`http://localhost:3065/${images[1].src}`} onClick={onZoom} />
+				</BorderDiv>
+				{showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
+			</React.Fragment>
 		);
 	}
 	return (
-		<div>
-			<DobleImg src={`http://localhost:3065/${images[0].src}`} />
-			<OverImgs>
-				<PlusOutlined />
-				<br />
-				<span>More view {images.length - 1} photos</span>
-			</OverImgs>
-		</div>
+		<React.Fragment>
+			<BorderDiv>
+				<DobleImg src={`http://localhost:3065/${images[0].src}`} onClick={onZoom} />
+				<OverTripleImgs onClick={onZoom}>
+					<PlusOutlined />
+					<br />
+					<span>More view {images.length - 1} photos</span>
+				</OverTripleImgs>
+			</BorderDiv>
+			{showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
+		</React.Fragment>
 	);
 };
 
