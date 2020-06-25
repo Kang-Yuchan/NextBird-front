@@ -37,8 +37,22 @@ export interface MainPost {
 	Likers: Array<{
 		id: number;
 	}>;
+	Retweet: Retweet;
 	Images: Array<Images>;
-	RetweetId: null;
+	RetweetId: number | null;
+	User: {
+		id: number;
+		userId: string;
+	};
+	UserId: number;
+	content: string;
+	createdAt: string;
+	id: number;
+	updatedAt: string;
+}
+
+export interface Retweet {
+	Images: Array<Images>;
 	User: {
 		id: number;
 		userId: string;

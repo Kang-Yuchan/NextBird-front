@@ -1,13 +1,20 @@
 import * as React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { Card, Button, Avatar, Form, Input, List, Comment } from 'antd';
+import { Card, Button, Avatar, Form, Input, List, Comment, Popover } from 'antd';
 import { RetweetOutlined, MessageOutlined, EllipsisOutlined, HeartTwoTone, HeartOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST, UNLIKE_POST_REQUEST, LIKE_POST_REQUEST } from '../reducers/post';
+import {
+	ADD_COMMENT_REQUEST,
+	LOAD_COMMENTS_REQUEST,
+	UNLIKE_POST_REQUEST,
+	LIKE_POST_REQUEST,
+	RETWEET_REQUEST
+} from '../reducers/post';
 import { PostProps } from '../pages';
 import { CommentItem } from '../interface';
 import PostImages from './PostImages';
+import PostCardContent from './PostCardContent';
 
 const PostCard = styled(Card)`
   margin-bottom: 20px;
@@ -46,6 +53,19 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 		[ me && me.id, commentText ]
 	);
 
+	const onRetweet = React.useCallback(
+		() => {
+			if (!me) {
+				return alert('Please log in.');
+			}
+			return dispatch({
+				type: RETWEET_REQUEST,
+				data: post.id
+			});
+		},
+		[ me && me.id, post && post.id ]
+	);
+
 	const onToggleComment = React.useCallback(() => {
 		setCommentFormOpened((prev) => !prev);
 		if (!commentFormOpened) {
@@ -79,52 +99,73 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 		},
 		[ me && me.id, post && post.id, liked ]
 	);
-
 	return (
 		<React.Fragment>
 			<PostCard
 				key={post.createdAt}
 				cover={post.Images[0] && <PostImages images={post.Images} />}
 				actions={[
-					<RetweetOutlined key="retweet" />,
+					<RetweetOutlined key="retweet" onClick={onRetweet} />,
 					liked ? (
 						<HeartTwoTone key="heart" onClick={onToggleLike} twoToneColor="#eb2f96" />
 					) : (
 						<HeartOutlined key="heart" onClick={onToggleLike} />
 					),
 					<MessageOutlined key="message" onClick={onToggleComment} />,
-					<EllipsisOutlined key="ellipsis" />
+					<Popover
+						key="ellipsis"
+						content={
+							<Button.Group>
+								{me && post.UserId === me.id ? (
+									<React.Fragment>
+										<Button>Edit</Button>
+										<Button type="ghost">Delete</Button>
+									</React.Fragment>
+								) : (
+									<Button>Report</Button>
+								)}
+							</Button.Group>
+						}
+					>
+						<EllipsisOutlined />
+					</Popover>
 				]}
+				title={post.RetweetId ? `${post.User.userId} retweet this post.` : null}
 				extra={<Button>Follow</Button>}
 			>
-				<Card.Meta
-					avatar={
-						<Link href={{ pathname: `/user`, query: { id: post.User.id } }} as={`/user/${post.User.id}`}>
-							<a>
-								<Avatar>{post.User.userId[0]}</Avatar>
-							</a>
-						</Link>
-					}
-					title={post.User.userId}
-					description={
-						<div>
-							{post.content.split(/(#[^\s]+)/g).map((v, index) => {
-								if (v.match(/#[^\s]+/)) {
-									return (
-										<Link
-											href={{ pathname: `/hashtag`, query: { tag: v.slice(1) } }}
-											as={`/user/${v.slice(1)}`}
-											key={index}
-										>
-											<a>{v}</a>
-										</Link>
-									);
-								}
-								return v;
-							})}
-						</div>
-					}
-				/>
+				{post.RetweetId && post.Retweet ? (
+					<Card cover={post.Retweet.Images[0] && <PostImages images={post.Retweet.Images} />}>
+						<Card.Meta
+							avatar={
+								<Link
+									href={{ pathname: `/user`, query: { id: post.Retweet.User.id } }}
+									as={`/user/${post.Retweet.User.id}`}
+								>
+									<a>
+										<Avatar>{post.Retweet.User.userId[0]}</Avatar>
+									</a>
+								</Link>
+							}
+							title={post.Retweet.User.userId}
+							description={<PostCardContent postData={post.Retweet.content} />}
+						/>
+					</Card>
+				) : (
+					<Card.Meta
+						avatar={
+							<Link
+								href={{ pathname: `/user`, query: { id: post.User.id } }}
+								as={`/user/${post.User.id}`}
+							>
+								<a>
+									<Avatar>{post.User.userId[0]}</Avatar>
+								</a>
+							</Link>
+						}
+						title={post.User.userId}
+						description={<PostCardContent postData={post.content} />}
+					/>
+				)}
 			</PostCard>
 			{commentFormOpened && (
 				<React.Fragment>
