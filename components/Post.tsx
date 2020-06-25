@@ -9,7 +9,8 @@ import {
 	LOAD_COMMENTS_REQUEST,
 	UNLIKE_POST_REQUEST,
 	LIKE_POST_REQUEST,
-	RETWEET_REQUEST
+	RETWEET_REQUEST,
+	REMOVE_POST_REQUEST
 } from '../reducers/post';
 import { PostProps } from '../pages';
 import { CommentItem } from '../interface';
@@ -121,6 +122,16 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 		[]
 	);
 
+	const onRemovePost = React.useCallback(
+		(userId) => () => {
+			dispatch({
+				type: REMOVE_POST_REQUEST,
+				data: userId
+			});
+		},
+		[]
+	);
+
 	return (
 		<React.Fragment>
 			<PostCard
@@ -141,7 +152,9 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 								{me && post.UserId === me.id ? (
 									<React.Fragment>
 										<Button>Edit</Button>
-										<Button danger>Delete</Button>
+										<Button danger onClick={onRemovePost(post.id)}>
+											Delete
+										</Button>
 									</React.Fragment>
 								) : (
 									<Button>Report</Button>

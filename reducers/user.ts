@@ -12,6 +12,7 @@ export const initialState = {
 };
 
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
+export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
 // ASYNCHRONOUS SIGN UP PATTERN
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
@@ -172,6 +173,15 @@ const reducer = (state = initialState, action) => {
 				me: {
 					...state.me,
 					Posts: [ { id: action.data }, ...state.me.Posts ]
+				}
+			};
+		}
+		case REMOVE_POST_OF_ME: {
+			return {
+				...state,
+				me: {
+					...state.me,
+					Posts: state.me.Posts.filter((v) => v.id !== action.data)
 				}
 			};
 		}

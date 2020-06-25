@@ -33,7 +33,7 @@
 - [x] Post like & like cancle
 - [x] Retweet
 - [x] Follow & Unfollow
-- [ ] Remove post
+- [x] Remove post
 - [ ] Performance optimization
 - [ ] SEO
 - [ ] Locale EN/JP/KR
