@@ -15,6 +15,7 @@ import { PostProps } from '../pages';
 import { CommentItem } from '../interface';
 import PostImages from './PostImages';
 import PostCardContent from './PostCardContent';
+import { FOLLOW_USER_REQUEST, UNFOLLOW_USER_REQUEST } from '../reducers/user';
 
 const PostCard = styled(Card)`
   margin-bottom: 20px;
@@ -99,6 +100,27 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 		},
 		[ me && me.id, post && post.id, liked ]
 	);
+
+	const onFollow = React.useCallback(
+		(userId) => () => {
+			dispatch({
+				type: FOLLOW_USER_REQUEST,
+				data: userId
+			});
+		},
+		[]
+	);
+
+	const onUnfollow = React.useCallback(
+		(userId) => () => {
+			dispatch({
+				type: UNFOLLOW_USER_REQUEST,
+				data: userId
+			});
+		},
+		[]
+	);
+
 	return (
 		<React.Fragment>
 			<PostCard
@@ -119,7 +141,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 								{me && post.UserId === me.id ? (
 									<React.Fragment>
 										<Button>Edit</Button>
-										<Button type="ghost">Delete</Button>
+										<Button danger>Delete</Button>
 									</React.Fragment>
 								) : (
 									<Button>Report</Button>
@@ -131,7 +153,14 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 					</Popover>
 				]}
 				title={post.RetweetId ? `${post.User.userId} retweet this post.` : null}
-				extra={<Button>Follow</Button>}
+				extra={
+					!me || post.User.id === me.id ? null : me.Followings &&
+					me.Followings.find((v) => v.id === post.User.id) ? (
+						<Button onClick={onUnfollow(post.User.id)}>Unfollow</Button>
+					) : (
+						<Button onClick={onFollow(post.User.id)}>Follow</Button>
+					)
+				}
 			>
 				{post.RetweetId && post.Retweet ? (
 					<Card cover={post.Retweet.Images[0] && <PostImages images={post.Retweet.Images} />}>

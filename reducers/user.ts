@@ -1,14 +1,14 @@
 export const initialState = {
-  isLoggingOut: false, // Logout request
-  isLoggingIn: false, // Login request
-  logInErrorReason: '', // Login error reason
-  signedUp: false, // Sign up success
-  isSigningUp: false, // Signup request
-  signUpErrorReason: '', // Signup error reason
-  me: null, // My information
-  followingList: [], // Follwing List
-  followerList: [], // Follower List
-  userInfo: null, // Different user information
+	isLoggingOut: false, // Logout request
+	isLoggingIn: false, // Login request
+	logInErrorReason: '', // Login error reason
+	signedUp: false, // Sign up success
+	isSigningUp: false, // Signup request
+	signUpErrorReason: '', // Signup error reason
+	me: null, // My information
+	followingList: [], // Follwing List
+	followerList: [], // Follower List
+	userInfo: null // Different user information
 };
 
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
@@ -47,92 +47,127 @@ export const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
 export const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
 
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case LOG_IN_REQUEST: {
-      return {
-        ...state,
-        isLoggingIn: true,
-        logInErrorReason: '',
-      };
-    }
-    case LOG_IN_SUCCESS: {
-      return {
-        ...state,
-        isLoggingIn: false,
-        me: action.data,
-        isLoading: false,
-      };
-    }
-    case LOG_IN_FAILURE: {
-      return {
-        ...state,
-        isLoggingIn: false,
-        me: null,
-        logInErrorReason: action.error,
-      };
-    }
-    case LOG_OUT_REQUEST: {
-      return {
-        ...state,
-        isLoggingOut: true,
-      };
-    }
-    case LOG_OUT_SUCCESS: {
-      return {
-        ...state,
-        isLoggingOut: false,
-        me: null,
-      };
-    }
-    case LOAD_USER_REQUEST: {
-      return {
-        ...state,
-      };
-    }
-    case LOAD_USER_SUCCESS: {
-      if (action.me) {
-        return {
-          ...state,
-          me: action.data,
-        };
-      }
-      return {
-        ...state,
-        userInfo: action.data,
-      };
-    }
-    case LOAD_USER_FAILURE: {
-      return {
-        ...state,
-      };
-    }
-    case SIGN_UP_REQUEST: {
-      return {
-        ...state,
-        isSigningUp: true,
-        signedUp: false,
-        signUpErrorReason: '',
-      };
-    }
-    case SIGN_UP_SUCCESS: {
-      return {
-        ...state,
-        isSigningUp: false,
-        signedUp: true,
-      };
-    }
-    case SIGN_UP_FAILURE: {
-      return {
-        ...state,
-        isSigningUp: false,
-        signUpErrorReason: action.error,
-      };
-    }
-    default: {
-      return {
-        ...state,
-      };
-    }
-  }
+	switch (action.type) {
+		case LOG_IN_REQUEST: {
+			return {
+				...state,
+				isLoggingIn: true,
+				logInErrorReason: ''
+			};
+		}
+		case LOG_IN_SUCCESS: {
+			return {
+				...state,
+				isLoggingIn: false,
+				me: action.data,
+				isLoading: false
+			};
+		}
+		case LOG_IN_FAILURE: {
+			return {
+				...state,
+				isLoggingIn: false,
+				me: null,
+				logInErrorReason: action.error
+			};
+		}
+		case LOG_OUT_REQUEST: {
+			return {
+				...state,
+				isLoggingOut: true
+			};
+		}
+		case LOG_OUT_SUCCESS: {
+			return {
+				...state,
+				isLoggingOut: false,
+				me: null
+			};
+		}
+		case LOAD_USER_REQUEST: {
+			return {
+				...state
+			};
+		}
+		case LOAD_USER_SUCCESS: {
+			if (action.me) {
+				return {
+					...state,
+					me: action.data
+				};
+			}
+			return {
+				...state,
+				userInfo: action.data
+			};
+		}
+		case LOAD_USER_FAILURE: {
+			return {
+				...state
+			};
+		}
+		case SIGN_UP_REQUEST: {
+			return {
+				...state,
+				isSigningUp: true,
+				signedUp: false,
+				signUpErrorReason: ''
+			};
+		}
+		case SIGN_UP_SUCCESS: {
+			return {
+				...state,
+				isSigningUp: false,
+				signedUp: true
+			};
+		}
+		case SIGN_UP_FAILURE: {
+			return {
+				...state,
+				isSigningUp: false,
+				signUpErrorReason: action.error
+			};
+		}
+		case FOLLOW_USER_REQUEST: {
+			return {
+				...state
+			};
+		}
+		case FOLLOW_USER_SUCCESS: {
+			return {
+				...state,
+				me: {
+					...state.me,
+					Followings: [ { id: action.data }, ...state.me.Followings ]
+				}
+			};
+		}
+		case FOLLOW_USER_FAILURE: {
+			return {
+				...state
+			};
+		}
+		case UNFOLLOW_USER_REQUEST: {
+			return {
+				...state
+			};
+		}
+		case UNFOLLOW_USER_SUCCESS: {
+			return {
+				...state,
+				me: {
+					...state.me,
+					Followings: state.me.Followings.filter((v) => v.id !== action.data)
+				}
+			};
+		}
+		case UNFOLLOW_USER_FAILURE: {
+		}
+		default: {
+			return {
+				...state
+			};
+		}
+	}
 };
 export default reducer;

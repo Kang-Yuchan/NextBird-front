@@ -32,7 +32,8 @@
 - [x] Image slide
 - [x] Post like & like cancle
 - [x] Retweet
-- [ ] Follow & Unfollow
+- [x] Follow & Unfollow
+- [ ] Remove post
 - [ ] Performance optimization
 - [ ] SEO
 - [ ] Locale EN/JP/KR
