@@ -34,6 +34,9 @@
 - [x] Retweet
 - [x] Follow & Unfollow
 - [x] Remove post
+- [ ] Server Side Rendering
+- [ ] Pagenation
+- [ ] Infinite scrolling
 - [ ] Performance optimization
 - [ ] SEO
 - [ ] Locale EN/JP/KR

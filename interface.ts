@@ -85,3 +85,14 @@ export interface CommentItem {
 	updatedAt: string;
 	Comments: Array<string>;
 }
+
+export interface FollowItem {
+	id: number;
+	Follow: {
+		createdAt: string;
+		followerId: number;
+		followingId: number;
+		updatedAt: string;
+	};
+	userId: number;
+}

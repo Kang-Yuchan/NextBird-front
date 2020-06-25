@@ -18,7 +18,16 @@ import {
 	FOLLOW_USER_FAILURE,
 	UNFOLLOW_USER_REQUEST,
 	UNFOLLOW_USER_SUCCESS,
-	UNFOLLOW_USER_FAILURE
+	UNFOLLOW_USER_FAILURE,
+	LOAD_FOLLOWERS_REQUEST,
+	LOAD_FOLLOWERS_SUCCESS,
+	LOAD_FOLLOWERS_FAILURE,
+	LOAD_FOLLOWINGS_REQUEST,
+	LOAD_FOLLOWINGS_FAILURE,
+	LOAD_FOLLOWINGS_SUCCESS,
+	REMOVE_FOLLOWER_SUCCESS,
+	REMOVE_FOLLOWER_FAILURE,
+	REMOVE_FOLLOWER_REQUEST
 } from '../reducers/user';
 
 function loginAPI(loginData) {
@@ -184,6 +193,84 @@ function* watchUnfollow(): Generator {
 	yield takeLatest(UNFOLLOW_USER_REQUEST, unfollow);
 }
 
+function loadFollowersAPI(userId) {
+	return Axios.get(`/user/${userId}/followers`, {
+		withCredentials: true
+	});
+}
+
+function* loadFollowers(action): Generator {
+	try {
+		const result = yield call(loadFollowersAPI, action.data);
+		yield put({
+			type: LOAD_FOLLOWERS_SUCCESS,
+			data: result.data
+		});
+	} catch (error) {
+		console.error(error);
+		yield put({
+			type: LOAD_FOLLOWERS_FAILURE,
+			error: error
+		});
+	}
+}
+
+function* watchLoadFollowers(): Generator {
+	yield takeLatest(LOAD_FOLLOWERS_REQUEST, loadFollowers);
+}
+
+function loadFollowingsAPI(userId) {
+	return Axios.get(`/user/${userId}/followings`, {
+		withCredentials: true
+	});
+}
+
+function* loadFollowings(action): Generator {
+	try {
+		const result = yield call(loadFollowingsAPI, action.data);
+		yield put({
+			type: LOAD_FOLLOWINGS_SUCCESS,
+			data: result.data
+		});
+	} catch (error) {
+		console.error(error);
+		yield put({
+			type: LOAD_FOLLOWINGS_FAILURE,
+			error: error
+		});
+	}
+}
+
+function* watchLoadFollowings(): Generator {
+	yield takeLatest(LOAD_FOLLOWINGS_REQUEST, loadFollowings);
+}
+
+function removeFollowerAPI(userId) {
+	return Axios.delete(`/user/${userId}/follower`, {
+		withCredentials: true
+	});
+}
+
+function* removeFollower(action): Generator {
+	try {
+		const result = yield call(removeFollowerAPI, action.data);
+		yield put({
+			type: REMOVE_FOLLOWER_SUCCESS,
+			data: result.data
+		});
+	} catch (error) {
+		console.error(error);
+		yield put({
+			type: REMOVE_FOLLOWER_FAILURE,
+			error: error
+		});
+	}
+}
+
+function* watchRemoveFollower(): Generator {
+	yield takeLatest(REMOVE_FOLLOWER_REQUEST, removeFollower);
+}
+
 export default function* userSaga(): Generator {
 	yield all([
 		fork(watchLogin),
@@ -191,6 +278,9 @@ export default function* userSaga(): Generator {
 		fork(watchSignup),
 		fork(watchLoadUser),
 		fork(watchFollow),
-		fork(watchUnfollow)
+		fork(watchUnfollow),
+		fork(watchLoadFollowers),
+		fork(watchLoadFollowings),
+		fork(watchRemoveFollower)
 	]);
 }
