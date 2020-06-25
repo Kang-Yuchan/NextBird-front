@@ -32,6 +32,7 @@ import {
 	RETWEET_FAILURE
 } from '../reducers/post';
 import Axios from 'axios';
+import { ADD_POST_TO_ME } from '../reducers/user';
 
 function addPostAPI(postData) {
 	return Axios.post('/post', postData, {
@@ -43,8 +44,14 @@ function* addPost(action): Generator {
 	try {
 		const result = yield call(addPostAPI, action.data);
 		yield put({
+			// edit post reducer
 			type: ADD_POST_SUCCESS,
 			data: result.data
+		});
+		yield put({
+			// edit user reducer
+			type: ADD_POST_TO_ME,
+			data: result.data.id
 		});
 	} catch (error) {
 		console.error(error);
