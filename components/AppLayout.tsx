@@ -14,14 +14,6 @@ const InputSearch = styled(Input.Search)`
 
 const AppLayout = ({ children }: NodeProps): React.ReactNode => {
 	const { me } = useSelector((state) => state.user);
-	const dispatch = useDispatch();
-	React.useEffect(() => {
-		if (!me) {
-			dispatch({
-				type: LOAD_USER_REQUEST
-			});
-		}
-	}, []);
 
 	return (
 		<React.Fragment>

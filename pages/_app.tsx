@@ -9,6 +9,8 @@ import { createStore, compose, applyMiddleware, StoreEnhancer } from 'redux';
 import reducer from '../reducers';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import rootSaga from '../sagas';
+import { LOAD_USER_REQUEST } from '../reducers/user';
+import Axios from 'axios';
 
 const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactElement => {
 	return (
@@ -36,10 +38,20 @@ const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactE
 };
 
 NextBird.getInitialProps = async (context) => {
-	const { ctx } = context;
+	const { ctx, Component } = context;
 	let pageProps = {};
-	if (context.Component.getInitialProps) {
-		pageProps = await context.Component.getInitialProps(ctx);
+	const state = ctx.store.getState();
+	const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
+	if (ctx.isServer && cookie) {
+		Axios.defaults.headers.Cookie = cookie;
+	}
+	if (!state.user.me) {
+		ctx.store.dispatch({
+			type: LOAD_USER_REQUEST
+		});
+	}
+	if (Component.getInitialProps) {
+		pageProps = await Component.getInitialProps(ctx);
 	}
 	return { pageProps };
 };
