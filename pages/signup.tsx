@@ -82,6 +82,10 @@ const Signup: React.FunctionComponent = () => {
 		setTerm(target.checked);
 	}, []);
 
+	if (me) {
+		return null;
+	}
+
 	return (
 		<React.Fragment>
 			<Form onSubmit={onSubmit}>
