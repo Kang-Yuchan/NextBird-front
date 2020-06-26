@@ -4,12 +4,13 @@ import AppLayout from '../components/AppLayout';
 import { ComponentProps } from '../interface';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
+import withReduxSaga from 'next-redux-saga';
 import { createStore, compose, applyMiddleware, StoreEnhancer } from 'redux';
 import reducer from '../reducers';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import rootSaga from '../sagas';
 
-const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactNode => {
+const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactElement => {
 	return (
 		<Provider store={store}>
 			<Head>
@@ -56,8 +57,8 @@ const configureStore = (initialState, options) => {
 						: (f) => f
 				);
 	const store = createStore(reducer, initialState, enhancer);
-	sagaMiddleware.run(rootSaga);
+	store.sagaTask = sagaMiddleware.run(rootSaga);
 	return store;
 };
 
-export default withRedux(configureStore)(NextBird);
+export default withRedux(configureStore)(withReduxSaga(NextBird));
