@@ -8,7 +8,9 @@ export const initialState = {
 	me: null, // My information
 	followingList: [], // Follwing List
 	followerList: [], // Follower List
-	userInfo: null // Different user information
+	userInfo: null, // Different user information
+	isEditingId: false,
+	editIdErrorReason: ''
 };
 
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
@@ -50,6 +52,10 @@ export const UNFOLLOW_USER_FAILURE = 'UNFOLLOW_USER_FAILURE';
 export const REMOVE_FOLLOWER_REQUEST = 'REMOVE_FOLLOWER_REQUEST';
 export const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
 export const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
+
+export const EDIT_ID_REQUEST = 'EDIT_ID_REQUEST';
+export const EDIT_ID_SUCCESS = 'EDIT_ID_SUCCESS';
+export const EDIT_ID_FAILURE = 'EDIT_ID_FAILURE';
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -240,6 +246,30 @@ const reducer = (state = initialState, action) => {
 		case REMOVE_FOLLOWER_FAILURE: {
 			return {
 				...state
+			};
+		}
+		case EDIT_ID_REQUEST: {
+			return {
+				...state,
+				isEditingId: true,
+				editIdErrorReason: ''
+			};
+		}
+		case EDIT_ID_SUCCESS: {
+			return {
+				...state,
+				isEditingId: false,
+				me: {
+					...state,
+					userId: action.data
+				}
+			};
+		}
+		case EDIT_ID_FAILURE: {
+			return {
+				...state,
+				isEditingId: false,
+				editIdErrorReason: action.error
 			};
 		}
 		default: {

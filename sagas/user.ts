@@ -27,7 +27,10 @@ import {
 	LOAD_FOLLOWINGS_SUCCESS,
 	REMOVE_FOLLOWER_SUCCESS,
 	REMOVE_FOLLOWER_FAILURE,
-	REMOVE_FOLLOWER_REQUEST
+	REMOVE_FOLLOWER_REQUEST,
+	EDIT_ID_REQUEST,
+	EDIT_ID_SUCCESS,
+	EDIT_ID_FAILURE
 } from '../reducers/user';
 
 function loginAPI(loginData) {
@@ -271,6 +274,36 @@ function* watchRemoveFollower(): Generator {
 	yield takeLatest(REMOVE_FOLLOWER_REQUEST, removeFollower);
 }
 
+function editIdAPI(userId) {
+	return Axios.patch(
+		`/user/userId`,
+		{ userId },
+		{
+			withCredentials: true
+		}
+	);
+}
+
+function* editId(action): Generator {
+	try {
+		const result = yield call(editIdAPI, action.data);
+		yield put({
+			type: EDIT_ID_SUCCESS,
+			data: result.data
+		});
+	} catch (error) {
+		console.error(error);
+		yield put({
+			type: EDIT_ID_FAILURE,
+			error: error
+		});
+	}
+}
+
+function* watchEditId(): Generator {
+	yield takeLatest(EDIT_ID_REQUEST, editId);
+}
+
 export default function* userSaga(): Generator {
 	yield all([
 		fork(watchLogin),
@@ -281,6 +314,7 @@ export default function* userSaga(): Generator {
 		fork(watchUnfollow),
 		fork(watchLoadFollowers),
 		fork(watchLoadFollowings),
-		fork(watchRemoveFollower)
+		fork(watchRemoveFollower),
+		fork(watchEditId)
 	]);
 }

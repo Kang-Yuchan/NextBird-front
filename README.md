@@ -34,6 +34,7 @@
 - [x] Retweet
 - [x] Follow & Unfollow
 - [x] Remove post
+- [x] Edit id
 - [ ] Server Side Rendering
 - [ ] Pagenation
 - [ ] Infinite scrolling
