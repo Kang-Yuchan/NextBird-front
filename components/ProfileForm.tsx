@@ -24,7 +24,7 @@ const ProfileForm = (): React.ReactElement => {
 	}, []);
 
 	const onEditId = React.useCallback(
-		(e) => {
+		(e: React.FormEvent<EventTarget>): void => {
 			e.preventDefault();
 			dispatch({
 				type: EDIT_ID_REQUEST,

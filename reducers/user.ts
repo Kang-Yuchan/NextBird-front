@@ -260,7 +260,7 @@ const reducer = (state = initialState, action) => {
 				...state,
 				isEditingId: false,
 				me: {
-					...state,
+					...state.me,
 					userId: action.data
 				}
 			};

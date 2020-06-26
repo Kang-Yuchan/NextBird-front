@@ -32,28 +32,8 @@ const ListItem = styled(List.Item)`
 
 const Profile: React.ReactNode = () => {
 	const dispatch = useDispatch();
-	const { me, followingList, followerList } = useSelector((state) => state.user);
+	const { followingList, followerList } = useSelector((state) => state.user);
 	const { mainPosts } = useSelector((state) => state.post);
-
-	React.useEffect(
-		() => {
-			if (me) {
-				dispatch({
-					type: LOAD_FOLLOWERS_REQUEST,
-					data: me.id
-				});
-				dispatch({
-					type: LOAD_FOLLOWINGS_REQUEST,
-					data: me.id
-				});
-				dispatch({
-					type: LOAD_USER_POSTS_REQUEST,
-					data: me.id
-				});
-			}
-		},
-		[ me && me.id ]
-	);
 
 	const onUnfollow = React.useCallback(
 		(userId) => () => {
@@ -111,6 +91,22 @@ const Profile: React.ReactNode = () => {
 			<React.Fragment>{mainPosts.map((c) => <Post key={c.createdAt} post={c} />)}</React.Fragment>
 		</React.Fragment>
 	);
+};
+
+Profile.getInitialProps = async (context) => {
+	const state = context.store.getState();
+	context.store.dispatch({
+		type: LOAD_FOLLOWERS_REQUEST,
+		data: state.user.me && state.user.me.id
+	});
+	context.store.dispatch({
+		type: LOAD_FOLLOWINGS_REQUEST,
+		data: state.user.me && state.user.me.id
+	});
+	context.store.dispatch({
+		type: LOAD_USER_POSTS_REQUEST,
+		data: state.user.me && state.user.me.id
+	});
 };
 
 export default Profile;

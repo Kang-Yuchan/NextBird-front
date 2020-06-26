@@ -154,7 +154,7 @@ function* watchLoadPosts(): Generator {
 }
 
 function loadUserPostsAPI(id) {
-	return Axios.get(`/user/${id}/posts`);
+	return Axios.get(`/user/${id || 0}/posts`);
 }
 
 function* loadUserPosts(action): Generator {

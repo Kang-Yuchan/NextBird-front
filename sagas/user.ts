@@ -197,7 +197,7 @@ function* watchUnfollow(): Generator {
 }
 
 function loadFollowersAPI(userId) {
-	return Axios.get(`/user/${userId}/followers`, {
+	return Axios.get(`/user/${userId || 0}/followers`, {
 		withCredentials: true
 	});
 }
@@ -223,7 +223,7 @@ function* watchLoadFollowers(): Generator {
 }
 
 function loadFollowingsAPI(userId) {
-	return Axios.get(`/user/${userId}/followings`, {
+	return Axios.get(`/user/${userId || 0}/followings`, {
 		withCredentials: true
 	});
 }
