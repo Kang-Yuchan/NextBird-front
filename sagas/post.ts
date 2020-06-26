@@ -178,7 +178,7 @@ function* watchLoadUserPosts(): Generator {
 }
 
 function loadHashtagPostsAPI(tag) {
-	return Axios.get(`/hashtag/${tag}`);
+	return Axios.get(`/hashtag/${encodeURIComponent(tag)}`);
 }
 
 function* loadHashtagPosts(action): Generator {

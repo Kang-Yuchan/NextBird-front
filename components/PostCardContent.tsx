@@ -13,7 +13,7 @@ const PostCardContent = ({ postData }: PostCardContentProps): React.ReactElement
 					return (
 						<Link
 							href={{ pathname: `/hashtag`, query: { tag: v.slice(1) } }}
-							as={`/user/${v.slice(1)}`}
+							as={`/hashtag/${v.slice(1)}`}
 							key={index}
 						>
 							<a>{v}</a>

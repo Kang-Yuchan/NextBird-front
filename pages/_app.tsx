@@ -58,7 +58,13 @@ NextBird.getInitialProps = async (context) => {
 
 const configureStore = (initialState, options) => {
 	const sagaMiddleware: SagaMiddleware = createSagaMiddleware();
-	const middlewares: Array<any> = [ sagaMiddleware ];
+	const middlewares: Array<any> = [
+		sagaMiddleware,
+		(store) => (next) => (action) => {
+			console.log(action);
+			next(action);
+		}
+	];
 	const enhancer: StoreEnhancer =
 		process.env.NODE_ENV === 'production'
 			? compose(applyMiddleware(...middlewares))
