@@ -38,7 +38,8 @@
 - [x] Server Side Rendering
 - [x] Pagination
 - [x] More view button
-- [ ] Infinite scrolling
+- [x] Infinite scrolling
+- [ ] Throttling
 - [ ] Performance optimization
 - [ ] SEO
 - [ ] Locale EN/JP/KR

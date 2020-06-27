@@ -10,8 +10,31 @@ export type PostProps = {
 };
 
 const Home: React.FunctionComponent = () => {
+	const dispatch = useDispatch();
 	const { me } = useSelector((state) => state.user);
 	const { mainPosts } = useSelector((state) => state.post);
+
+	const onScroll = React.useCallback(
+		() => {
+			if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+				dispatch({
+					type: LOAD_MAIN_POSTS_REQUEST,
+					lastId: mainPosts[mainPosts.length - 1].id
+				});
+			}
+		},
+		[ mainPosts.length ]
+	);
+
+	React.useEffect(
+		() => {
+			window.addEventListener('scroll', onScroll);
+			return () => {
+				window.removeEventListener('scroll', onScroll);
+			};
+		},
+		[ mainPosts ]
+	);
 
 	return (
 		<React.Fragment>

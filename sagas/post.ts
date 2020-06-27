@@ -129,13 +129,13 @@ function* watchLoadComments(): Generator {
 	yield takeLatest(LOAD_COMMENTS_REQUEST, loadComments);
 }
 
-function loadMainPostsAPI() {
-	return Axios.get('/posts');
+function loadMainPostsAPI(lastId = 0, limit = 10) {
+	return Axios.get(`/posts?lastId=${lastId}&limit=${limit}`);
 }
 
-function* loadMainPosts(): Generator {
+function* loadMainPosts(action): Generator {
 	try {
-		const result = yield call(loadMainPostsAPI);
+		const result = yield call(loadMainPostsAPI, action.lastId);
 		yield put({
 			type: LOAD_MAIN_POSTS_SUCCESS,
 			data: result.data
@@ -177,13 +177,13 @@ function* watchLoadUserPosts(): Generator {
 	yield takeLatest(LOAD_USER_POSTS_REQUEST, loadUserPosts);
 }
 
-function loadHashtagPostsAPI(tag) {
-	return Axios.get(`/hashtag/${encodeURIComponent(tag)}`);
+function loadHashtagPostsAPI(tag, lastId) {
+	return Axios.get(`/hashtag/${encodeURIComponent(tag)}&lastId=${lastId}&limit=10`);
 }
 
 function* loadHashtagPosts(action): Generator {
 	try {
-		const result = yield call(loadHashtagPostsAPI, action.data);
+		const result = yield call(loadHashtagPostsAPI, action.data, action.lastId);
 		yield put({
 			type: LOAD_HASHTAG_POSTS_SUCCESS,
 			data: result.data
