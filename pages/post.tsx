@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { LOAD_POST_REQUEST } from '../reducers/post';
+import { Helmet } from 'react-helmet';
 
 interface PostProps {
 	id: number;
@@ -10,6 +11,32 @@ const Post = ({ id }: PostProps) => {
 	const { singlePost } = useSelector((state) => state.post);
 	return (
 		<React.Fragment>
+			<Helmet
+				title={`${singlePost.User.userId}'s post`}
+				description={singlePost.content}
+				meta={[
+					{
+						name: 'description',
+						content: singlePost.content
+					},
+					{
+						property: 'og:title',
+						content: `${singlePost.User.userId}'s post`
+					},
+					{
+						property: 'og:description',
+						content: singlePost.content
+					},
+					{
+						property: 'og:image',
+						content: singlePost.Images[0] && `http://localhost:3065/${singlePost.Images[0].src}`
+					},
+					{
+						property: 'og:url',
+						content: `http://localhost:3060/post/${id}`
+					}
+				]}
+			/>
 			<div>{singlePost.content}</div>
 			<div>{singlePost.User.userId}</div>
 			<div>{singlePost.Images[0] && <img src={`http://localhost:3065/${singlePost.Images[0].src}`} />}</div>

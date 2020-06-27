@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Head from 'next/head';
+import { Helmet } from 'react-helmet';
 import AppLayout from '../components/AppLayout';
 import { ComponentProps } from '../interface';
 import { Provider } from 'react-redux';
@@ -15,21 +16,57 @@ import Axios from 'axios';
 const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactElement => {
 	return (
 		<Provider store={store}>
-			<Head>
-				<title>Next Bird</title>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.3.1/antd.css" />
-				<link
-					rel="stylesheet"
-					type="text/css"
-					charset="UTF-8"
-					href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-				/>
-				<link
-					rel="stylesheet"
-					type="text/css"
-					href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-				/>
-			</Head>
+			<Helmet
+				title="Next Bird"
+				htmlAttributes={{ lang: 'en' }}
+				meta={[
+					{
+						charSet: 'UTF-8'
+					},
+					{
+						name: 'viewport',
+						content:
+							'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover'
+					},
+					{
+						'http-equiv': 'X-UA-Compatible',
+						content: 'IE-edge'
+					},
+					{
+						name: 'description',
+						content: "Kang Yuchan's Next Bird SNS"
+					},
+					{
+						name: 'og:title',
+						content: 'Next Bird'
+					},
+					{
+						name: 'og:description',
+						content: "Kang Yuchan's Next Bird SNS"
+					},
+					{
+						property: 'og:type',
+						content: 'website'
+					}
+				]}
+				link={[
+					{
+						rel: 'stylesheet',
+						href: 'https://cdnjs.cloudflare.com/ajax/libs/antd/4.3.1/antd.css'
+					},
+					{
+						rel: 'stylesheet',
+						type: 'text/css',
+						charSet: 'UTF-8',
+						href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css'
+					},
+					{
+						rel: 'stylesheet',
+						type: 'text/css',
+						href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'
+					}
+				]}
+			/>
 			<AppLayout>
 				<Component {...pageProps} />
 			</AppLayout>
@@ -58,13 +95,7 @@ NextBird.getInitialProps = async (context) => {
 
 const configureStore = (initialState, options) => {
 	const sagaMiddleware: SagaMiddleware = createSagaMiddleware();
-	const middlewares: Array<any> = [
-		sagaMiddleware,
-		(store) => (next) => (action) => {
-			console.log(action);
-			next(action);
-		}
-	];
+	const middlewares: Array<any> = [ sagaMiddleware ];
 	const enhancer: StoreEnhancer =
 		process.env.NODE_ENV === 'production'
 			? compose(applyMiddleware(...middlewares))

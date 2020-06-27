@@ -43,8 +43,8 @@
 - [x] Infinite scrolling
 - [x] Throttling
 - [x] immer
+- [x] SEO with react-helmet
 - [ ] Performance optimization
-- [ ] SEO
 - [ ] Locale EN/JP/KR
 - [ ] Type error fix
 
