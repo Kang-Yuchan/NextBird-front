@@ -23,7 +23,8 @@ const FollowerList = styled(List)`
 `;
 
 const ViewMoreBtn = styled(Button)`
-  width: 100%;
+	width: 100%;
+	border: 0px;
 `;
 
 const ListItem = styled(List.Item)`
@@ -108,7 +109,7 @@ const Profile: React.ReactNode = () => {
 					</ListItem>
 				)}
 			/>
-			<React.Fragment>{mainPosts.map((c) => <Post key={c.createdAt} post={c} />)}</React.Fragment>
+			<React.Fragment>{mainPosts.map((c, i) => <Post key={i} post={c} />)}</React.Fragment>
 		</React.Fragment>
 	);
 };

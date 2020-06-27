@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { NodeProps } from '../interface';
 import LoginForm from '../components/LoginForm';
 import UserCard from '../components/UserCard';
-import { useSelector, useDispatch } from 'react-redux';
-import { LOAD_USER_REQUEST } from '../reducers/user';
+import { useSelector } from 'react-redux';
+import Router from 'next/router';
 
 const InputSearch = styled(Input.Search)`
   vertical-align: middle;
@@ -14,6 +14,10 @@ const InputSearch = styled(Input.Search)`
 
 const AppLayout = ({ children }: NodeProps): React.ReactNode => {
 	const { me } = useSelector((state) => state.user);
+
+	const onSearch = (value) => {
+		Router.push({ pathname: '/hashtag', query: { tag: value } }, `/hashtag/${value}`);
+	};
 
 	return (
 		<React.Fragment>
@@ -29,7 +33,7 @@ const AppLayout = ({ children }: NodeProps): React.ReactNode => {
 					</Link>
 				</Menu.Item>
 				<Menu.Item key="mail">
-					<InputSearch enterButton />
+					<InputSearch enterButton onSearch={onSearch} />
 				</Menu.Item>
 			</Menu>
 			<Row gutter={10}>

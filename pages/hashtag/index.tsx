@@ -36,7 +36,7 @@ const Hashtag = ({ tag }: ContextProps) => {
 		[ mainPosts.length, tag ]
 	);
 
-	return <React.Fragment>{mainPosts.map((c) => <Post key={c.createdAt} post={c} />)}</React.Fragment>;
+	return <React.Fragment>{mainPosts.map((c, index) => <Post key={index} post={c} />)}</React.Fragment>;
 };
 
 Hashtag.getInitialProps = async (context) => {
