@@ -47,7 +47,6 @@
 - [ ] SEO
 - [ ] Locale EN/JP/KR
 - [ ] Type error fix
-- [ ] Express change to next/route
 
 ## Install
 

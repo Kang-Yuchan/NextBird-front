@@ -13,15 +13,20 @@ const Home: React.FunctionComponent = () => {
 	const dispatch = useDispatch();
 	const { me } = useSelector((state) => state.user);
 	const { mainPosts, hasMorePost } = useSelector((state) => state.post);
+	const countRef = React.useRef<Array<number>>([]);
 
 	const onScroll = React.useCallback(
 		() => {
 			if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
 				if (hasMorePost) {
-					dispatch({
-						type: LOAD_MAIN_POSTS_REQUEST,
-						lastId: mainPosts[mainPosts.length - 1].id
-					});
+					const lastId = mainPosts[mainPosts.length - 1].id;
+					if (!countRef.current.includes(lastId)) {
+						dispatch({
+							type: LOAD_MAIN_POSTS_REQUEST,
+							lastId
+						});
+						countRef.current.push(lastId);
+					}
 				}
 			}
 		},
