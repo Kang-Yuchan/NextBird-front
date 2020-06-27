@@ -14,39 +14,41 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  const server = express();
+	const server = express();
 
-  server.use(morgan('dev'));
-  server.use(express.json());
-  server.use(express.urlencoded({ extended: true }));
-  server.use(cookieParser());
-  server.use(
-    expressSession({
-      resave: true,
-      saveUninitialized: false,
-      secret: process.env.COOKIE_SECRET,
-      cookie: {
-        httpOnly: true,
-        secure: false,
-      },
-    }),
-  );
+	server.use(morgan('dev'));
+	server.use(express.json());
+	server.use(express.urlencoded({ extended: true }));
+	server.use(cookieParser());
+	server.use(
+		expressSession({
+			resave: true,
+			saveUninitialized: false,
+			secret: process.env.COOKIE_SECRET,
+			cookie: {
+				httpOnly: true,
+				secure: false
+			}
+		})
+	);
 
-  server.get('/hashtag/:tag', (req, res) => {
-    return app.render(req, res, '/hashtag', { tag: req.params.tag });
-  });
+	server.get('/post/:id', (req, res) => {
+		return app.render(req, res, '/post', { id: req.params.id });
+	});
 
-  server.get('/user/:id', (req, res) => {
-    return app.render(req, res, '/user', { id: req.params.id });
-  });
+	server.get('/hashtag/:tag', (req, res) => {
+		return app.render(req, res, '/hashtag', { tag: req.params.tag });
+	});
 
-  server.get('*', (req, res) => {
-    return handle(req, res);
-  });
+	server.get('/user/:id', (req, res) => {
+		return app.render(req, res, '/user', { id: req.params.id });
+	});
 
-  server.listen(PORT, () => {
-    console.log(
-      PORT ? `Listening next + express server: localhost:${PORT} 👌` : 'Your server is dead... 💀',
-    );
-  });
+	server.get('*', (req, res) => {
+		return handle(req, res);
+	});
+
+	server.listen(PORT, () => {
+		console.log(PORT ? `Listening next + express server: localhost:${PORT} 👌` : 'Your server is dead... 💀');
+	});
 });

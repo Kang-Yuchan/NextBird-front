@@ -9,7 +9,8 @@ export const initialState = {
 	isAddingComment: false, // Comment uploading
 	addedComment: false, // Comment upload success
 	addCommentErrorReason: '',
-	hasMorePost: false
+	hasMorePost: false,
+	singlePost: null
 };
 
 // ASYNCHRONOUS PATTERN
@@ -58,6 +59,10 @@ export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
 const reducer = (state = initialState, action) => {
 	return produce(state, (draft) => {
@@ -183,6 +188,10 @@ const reducer = (state = initialState, action) => {
 				break;
 			}
 			case REMOVE_POST_FAILURE: {
+				break;
+			}
+			case LOAD_POST_SUCCESS: {
+				draft.singlePost = action.data;
 				break;
 			}
 			default: {

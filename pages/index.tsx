@@ -21,11 +21,11 @@ const Home: React.FunctionComponent = () => {
 				if (hasMorePost) {
 					const lastId = mainPosts[mainPosts.length - 1].id;
 					if (!countRef.current.includes(lastId)) {
+						countRef.current.push(lastId);
 						dispatch({
 							type: LOAD_MAIN_POSTS_REQUEST,
 							lastId
 						});
-						countRef.current.push(lastId);
 					}
 				}
 			}
