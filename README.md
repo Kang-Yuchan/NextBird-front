@@ -24,6 +24,8 @@
 * Next.js(Static Site Generator, Server Side Rendering): https://nextjs.org/
 * Redux(State Management): https://redux.js.org/
 * Redux-Saga(Redux Middleware for asynchronous processing): https://redux-saga.js.org/
+* immer(immutable state by mutating the current one): https://immerjs.github.io/immer/docs/introduction
+* react-helmet(manage all of your changes to the document head): https://github.com/nfl/react-helmet
 * Express(Frontend nodejs server for Dynamic Routing): https://expressjs.com/
 
 ## TODO
@@ -40,6 +42,7 @@
 - [x] More view button
 - [x] Infinite scrolling
 - [x] Throttling
+- [x] immer
 - [ ] Performance optimization
 - [ ] SEO
 - [ ] Locale EN/JP/KR
