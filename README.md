@@ -39,7 +39,7 @@
 - [x] Pagination
 - [x] More view button
 - [x] Infinite scrolling
-- [ ] Throttling
+- [x] Throttling
 - [ ] Performance optimization
 - [ ] SEO
 - [ ] Locale EN/JP/KR

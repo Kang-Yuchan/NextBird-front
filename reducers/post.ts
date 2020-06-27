@@ -82,53 +82,27 @@ const reducer = (state = initialState, action) => {
 				addPostErrorReason: action.error
 			};
 		}
+		case LOAD_HASHTAG_POSTS_REQUEST:
+		case LOAD_USER_POSTS_REQUEST:
 		case LOAD_MAIN_POSTS_REQUEST: {
 			return {
 				...state,
-				mainPosts: action.lastId === 0 ? [] : state.mainPosts
+				mainPosts: action.lastId === 0 ? [] : state.mainPosts,
+				hasMorePost: action.lastId ? state.hasMorePost : true
 			};
 		}
+		case LOAD_HASHTAG_POSTS_SUCCESS:
+		case LOAD_USER_POSTS_SUCCESS:
 		case LOAD_MAIN_POSTS_SUCCESS: {
 			return {
 				...state,
-				mainPosts: state.mainPosts.concat(action.data)
+				mainPosts: state.mainPosts.concat(action.data),
+				hasMorePost: action.data.length === 10
 			};
 		}
+		case LOAD_HASHTAG_POSTS_FAILURE:
+		case LOAD_USER_POSTS_FAILURE:
 		case LOAD_MAIN_POSTS_FAILURE: {
-			return {
-				...state
-			};
-		}
-		case LOAD_USER_POSTS_REQUEST: {
-			return {
-				...state,
-				mainPosts: action.lastId === 0 ? [] : state.mainPosts
-			};
-		}
-		case LOAD_USER_POSTS_SUCCESS: {
-			return {
-				...state,
-				mainPosts: state.mainPosts.concat(action.data)
-			};
-		}
-		case LOAD_USER_POSTS_FAILURE: {
-			return {
-				...state
-			};
-		}
-		case LOAD_HASHTAG_POSTS_REQUEST: {
-			return {
-				...state,
-				mainPosts: action.lastId === 0 ? [] : state.mainPosts
-			};
-		}
-		case LOAD_HASHTAG_POSTS_SUCCESS: {
-			return {
-				...state,
-				mainPosts: state.mainPosts.concat(action.data)
-			};
-		}
-		case LOAD_HASHTAG_POSTS_FAILURE: {
 			return {
 				...state
 			};

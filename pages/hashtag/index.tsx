@@ -9,19 +9,21 @@ type ContextProps = {
 
 const Hashtag = ({ tag }: ContextProps) => {
 	const dispatch = useDispatch();
-	const { mainPosts } = useSelector((state) => state.post);
+	const { mainPosts, hasMorePost } = useSelector((state) => state.post);
 
 	const onScroll = React.useCallback(
 		() => {
 			if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
-				dispatch({
-					type: LOAD_HASHTAG_POSTS_REQUEST,
-					lastId: mainPosts[mainPosts.length - 1] && mainPosts[mainPosts.length - 1].id,
-					data: tag
-				});
+				if (hasMorePost) {
+					dispatch({
+						type: LOAD_HASHTAG_POSTS_REQUEST,
+						lastId: mainPosts[mainPosts.length - 1] && mainPosts[mainPosts.length - 1].id,
+						data: tag
+					});
+				}
 			}
 		},
-		[ mainPosts ]
+		[ mainPosts.length, hasMorePost ]
 	);
 
 	React.useEffect(

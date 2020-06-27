@@ -1,4 +1,4 @@
-import { all, fork, takeLatest, delay, put, call } from 'redux-saga/effects';
+import { all, fork, takeLatest, put, call, throttle } from 'redux-saga/effects';
 import {
 	ADD_POST_REQUEST,
 	ADD_POST_SUCCESS,
@@ -150,7 +150,7 @@ function* loadMainPosts(action): Generator {
 }
 
 function* watchLoadPosts(): Generator {
-	yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadMainPosts);
+	yield throttle(2000, LOAD_MAIN_POSTS_REQUEST, loadMainPosts);
 }
 
 function loadUserPostsAPI(id) {
@@ -174,11 +174,11 @@ function* loadUserPosts(action): Generator {
 }
 
 function* watchLoadUserPosts(): Generator {
-	yield takeLatest(LOAD_USER_POSTS_REQUEST, loadUserPosts);
+	yield throttle(2000, LOAD_USER_POSTS_REQUEST, loadUserPosts);
 }
 
 function loadHashtagPostsAPI(tag, lastId) {
-	return Axios.get(`/hashtag/${encodeURIComponent(tag)}&lastId=${lastId}&limit=10`);
+	return Axios.get(`/hashtag/${encodeURIComponent(tag)}?lastId=${lastId}&limit=10`);
 }
 
 function* loadHashtagPosts(action): Generator {
@@ -198,7 +198,7 @@ function* loadHashtagPosts(action): Generator {
 }
 
 function* watchLoadHashtagPosts(): Generator {
-	yield takeLatest(LOAD_HASHTAG_POSTS_REQUEST, loadHashtagPosts);
+	yield throttle(2000, LOAD_HASHTAG_POSTS_REQUEST, loadHashtagPosts);
 }
 
 function uploadImagesAPI(formData) {
