@@ -32,7 +32,7 @@ const ListItem = styled(List.Item)`
 
 const Profile: React.ReactNode = () => {
 	const dispatch = useDispatch();
-	const { followingList, followerList } = useSelector((state) => state.user);
+	const { followingList, followerList, hasMoreFollower, hasMoreFollowing } = useSelector((state) => state.user);
 	const { mainPosts } = useSelector((state) => state.post);
 
 	const onUnfollow = React.useCallback(
@@ -55,6 +55,26 @@ const Profile: React.ReactNode = () => {
 		[]
 	);
 
+	const loadMoreFollowings = React.useCallback(
+		() => {
+			dispatch({
+				type: LOAD_FOLLOWINGS_REQUEST,
+				offset: followingList.length
+			});
+		},
+		[ followingList ]
+	);
+
+	const loadMoreFollowers = React.useCallback(
+		() => {
+			dispatch({
+				type: LOAD_FOLLOWERS_REQUEST,
+				offset: followerList.length
+			});
+		},
+		[ followerList ]
+	);
+
 	return (
 		<React.Fragment>
 			<ProfileForm />
@@ -62,7 +82,7 @@ const Profile: React.ReactNode = () => {
 				grid={{ gutter: 4, xs: 2, md: 3 }}
 				size="small"
 				header={<div>Following List</div>}
-				loadMore={<ViewMoreBtn>View More</ViewMoreBtn>}
+				loadMore={hasMoreFollowing && <ViewMoreBtn onClick={loadMoreFollowings}>View More</ViewMoreBtn>}
 				bordered
 				dataSource={followingList}
 				renderItem={(item: FollowItem) => (
@@ -77,7 +97,7 @@ const Profile: React.ReactNode = () => {
 				grid={{ gutter: 4, xs: 2, md: 3 }}
 				size="small"
 				header={<div>Follower List</div>}
-				loadMore={<ViewMoreBtn>View More</ViewMoreBtn>}
+				loadMore={hasMoreFollower && <ViewMoreBtn onClick={loadMoreFollowers}>View More</ViewMoreBtn>}
 				bordered
 				dataSource={followerList}
 				renderItem={(item: FollowItem) => (

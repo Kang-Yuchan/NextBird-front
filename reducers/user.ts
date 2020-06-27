@@ -10,7 +10,9 @@ export const initialState = {
 	followerList: [], // Follower List
 	userInfo: null, // Different user information
 	isEditingId: false,
-	editIdErrorReason: ''
+	editIdErrorReason: '',
+	hasMoreFollower: false,
+	hasMoreFollowing: false
 };
 
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
@@ -198,13 +200,15 @@ const reducer = (state = initialState, action) => {
 		}
 		case LOAD_FOLLOWERS_REQUEST: {
 			return {
-				...state
+				...state,
+				hasMoreFollower: action.offset ? state.hasMoreFollower : true
 			};
 		}
 		case LOAD_FOLLOWERS_SUCCESS: {
 			return {
 				...state,
-				followerList: action.data
+				followerList: state.followerList.concat(action.data),
+				hasMoreFollower: action.data.length === 3
 			};
 		}
 		case LOAD_FOLLOWERS_FAILURE: {
@@ -214,13 +218,15 @@ const reducer = (state = initialState, action) => {
 		}
 		case LOAD_FOLLOWINGS_REQUEST: {
 			return {
-				...state
+				...state,
+				hasMoreFollowing: action.offset ? state.hasMoreFollowing : true
 			};
 		}
 		case LOAD_FOLLOWINGS_SUCCESS: {
 			return {
 				...state,
-				followingList: action.data
+				followingList: state.followingList.concat(action.data),
+				hasMoreFollowing: action.data.length === 3
 			};
 		}
 		case LOAD_FOLLOWINGS_FAILURE: {

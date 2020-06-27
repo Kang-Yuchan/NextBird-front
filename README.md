@@ -36,7 +36,8 @@
 - [x] Remove post
 - [x] Edit id
 - [x] Server Side Rendering
-- [ ] Pagenation
+- [x] Pagination
+- [x] More view button
 - [ ] Infinite scrolling
 - [ ] Performance optimization
 - [ ] SEO
