@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import AppLayout from '../components/AppLayout';
-import { ComponentProps } from '../interface';
+import AppLayout from '../../components/AppLayout';
+import { ComponentProps } from '../../interface';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 import { createStore, compose, applyMiddleware, StoreEnhancer } from 'redux';
-import reducer from '../reducers';
+import reducer from '../../reducers';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import rootSaga from '../sagas';
-import { LOAD_USER_REQUEST } from '../reducers/user';
+import rootSaga from '../../sagas';
+import { LOAD_USER_REQUEST } from '../../reducers/user';
 import Axios from 'axios';
 
 const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactElement => {
