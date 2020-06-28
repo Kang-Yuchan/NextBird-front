@@ -77,8 +77,8 @@ const reducer = (state = initialState, action) => {
 			}
 			case LOG_IN_FAILURE: {
 				draft.isLoggingIn = false;
+				draft.logInErrorReason = action.reason;
 				draft.me = null;
-				draft.logInErrorReason = action.error;
 				break;
 			}
 			case LOG_OUT_REQUEST: {

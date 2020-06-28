@@ -50,7 +50,7 @@ function* login(action): Generator {
 		console.error(error);
 		yield put({
 			type: LOG_IN_FAILURE,
-			error: error
+			reason: error.response && error.response.data
 		});
 	}
 }

@@ -15,9 +15,11 @@ const LoginBtn = styled(Button)`
   margin-right: 10px;
 `;
 
+const LoginError = styled.span`color: red;`;
+
 const LoginForm: React.FunctionComponent = () => {
 	const dispatch = useDispatch();
-	const { isLoggingIn } = useSelector((state: RootState) => state.user);
+	const { isLoggingIn, logInErrorReason } = useSelector((state: RootState) => state.user);
 	const [ id, onChangeId ]: UseInputType = useInput('');
 	const [ password, onChangePassword ]: UseInputType = useInput('');
 
@@ -46,6 +48,7 @@ const LoginForm: React.FunctionComponent = () => {
 				<br />
 				<Input name="user-password" value={password} onChange={onChangePassword} type="password" required />
 			</InputBox>
+			<LoginError>{logInErrorReason}</LoginError>
 			<div>
 				<LoginBtn type="primary" htmlType="submit" loading={isLoggingIn}>
 					Log In
