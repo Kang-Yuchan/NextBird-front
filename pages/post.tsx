@@ -31,11 +31,11 @@ const Post = ({ id }: PostProps) => {
 					},
 					{
 						property: 'og:image',
-						content: singlePost.Images[0] ? singlePost.Images[0].src : 'http://nextbird.com/favicon.ico'
+						content: singlePost.Images[0] ? singlePost.Images[0].src : 'http://nextbird.site/favicon.ico'
 					},
 					{
 						property: 'og:url',
-						content: `http://nextbird.com/post/${id}`
+						content: `http://nextbird.site/post/${id}`
 					}
 				]}
 			/>
