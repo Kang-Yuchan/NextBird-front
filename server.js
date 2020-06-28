@@ -50,7 +50,11 @@ app.prepare().then(() => {
 		return handle(req, res);
 	});
 
-	server.listen(PORT, () => {
-		console.log(PORT ? `Listening next + express server: localhost:${PORT} 👌` : 'Your server is dead... 💀');
+	server.listen(prod ? PORT : 3060, () => {
+		console.log(
+			prod
+				? `Listening next + express server: localhost:${PORT} 👌`
+				: `Listening next + express server: localhost:3060 👌`
+		);
 	});
 });
