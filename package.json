@@ -6,7 +6,7 @@
 		"dev": "nodemon",
 		"build": "ANALYZE=true next build",
 		"prestart": "yarn build",
-		"start": "NODE_ENV=production next start",
+		"start": "NODE_ENV=production PORT=80 pm2 start server",
 		"lint": "eslint --ext .ts,.tsx"
 	},
 	"license": "MIT",
@@ -29,6 +29,7 @@
 		"next": "^9.4.4",
 		"next-redux-saga": "^4.1.2",
 		"next-redux-wrapper": "^3.0.0-alpha.2",
+		"pm2": "^4.4.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-helmet": "^6.1.0",
@@ -66,6 +67,10 @@
 		}
 	},
 	"lint-staged": {
-		"*.{js,jsx,ts,tsx}": [ "prettier --write", "eslint --fix", "git add" ]
+		"*.{js,jsx,ts,tsx}": [
+			"prettier --write",
+			"eslint --fix",
+			"git add"
+		]
 	}
 }
