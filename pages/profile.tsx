@@ -13,6 +13,7 @@ import {
 import { LOAD_USER_POSTS_REQUEST } from '../reducers/post';
 import Post from '../components/Post';
 import { FollowItem } from '../interface';
+import { RootState } from '../reducers';
 
 const FollowList = styled(List)`
   margin-bottom: 20px;
@@ -33,8 +34,10 @@ const ListItem = styled(List.Item)`
 
 const Profile: React.ReactNode = () => {
 	const dispatch = useDispatch();
-	const { followingList, followerList, hasMoreFollower, hasMoreFollowing } = useSelector((state) => state.user);
-	const { mainPosts } = useSelector((state) => state.post);
+	const { followingList, followerList, hasMoreFollower, hasMoreFollowing } = useSelector(
+		(state: RootState) => state.user
+	);
+	const { mainPosts } = useSelector((state: RootState) => state.post);
 
 	const onUnfollow = React.useCallback(
 		(userId) => () => {

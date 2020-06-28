@@ -2,6 +2,7 @@ import * as React from 'react';
 import Post from '../../components/Post';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_HASHTAG_POSTS_REQUEST } from '../../reducers/post';
+import { RootState } from '../../reducers';
 
 type ContextProps = {
 	tag: string | number;
@@ -9,7 +10,7 @@ type ContextProps = {
 
 const Hashtag = ({ tag }: ContextProps) => {
 	const dispatch = useDispatch();
-	const { mainPosts, hasMorePost } = useSelector((state) => state.post);
+	const { mainPosts, hasMorePost } = useSelector((state: RootState) => state.post);
 
 	const onScroll = React.useCallback(
 		() => {

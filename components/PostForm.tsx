@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_POST_REQUEST, UPLOAD_IMAGES_REQUEST, REMOVE_IMAGE } from '../reducers/post';
+import { RootState } from '../reducers';
 
 const Form = styled.form`margin-bottom: 20px;`;
 
@@ -21,7 +22,7 @@ const Img = styled.img`width: 200px;`;
 const PostForm = (): React.ReactElement => {
 	const dispatch = useDispatch();
 	const [ text, setText ] = React.useState<string>('');
-	const { imagePaths, isAddingPost, addedPost } = useSelector((state) => state.post);
+	const { imagePaths, isAddingPost, addedPost } = useSelector((state: RootState) => state.post);
 	const imageInput = React.useRef(null);
 
 	React.useEffect(

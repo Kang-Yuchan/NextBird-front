@@ -17,14 +17,15 @@ import { CommentItem } from '../interface';
 import PostImages from './PostImages';
 import PostCardContent from './PostCardContent';
 import { FOLLOW_USER_REQUEST, UNFOLLOW_USER_REQUEST } from '../reducers/user';
+import { RootState } from '../reducers';
 
 const PostCard = styled(Card)`
   margin-bottom: 20px;
 `;
 
 const Post = ({ post }: PostProps): React.ReactElement => {
-	const { isAddingComment, addedComment } = useSelector((state) => state.post);
-	const { me } = useSelector((state) => state.user);
+	const { isAddingComment, addedComment } = useSelector((state: RootState) => state.post);
+	const { me } = useSelector((state: RootState) => state.user);
 	const dispatch = useDispatch();
 	const [ commentFormOpened, setCommentFormOpened ] = React.useState<boolean>(false);
 	const [ commentText, setCommentText ] = React.useState<string>('');

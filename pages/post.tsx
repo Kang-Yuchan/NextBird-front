@@ -2,13 +2,14 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { LOAD_POST_REQUEST } from '../reducers/post';
 import { Helmet } from 'react-helmet';
+import { RootState } from '../reducers';
 
 interface PostProps {
 	id: number;
 }
 
 const Post = ({ id }: PostProps) => {
-	const { singlePost } = useSelector((state) => state.post);
+	const { singlePost } = useSelector((state: RootState) => state.post);
 	return (
 		<React.Fragment>
 			<Helmet

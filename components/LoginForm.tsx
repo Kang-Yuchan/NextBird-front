@@ -5,6 +5,7 @@ import { useInput, UseInputType } from '../pages/signup';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_IN_REQUEST } from '../reducers/user';
 import styled from 'styled-components';
+import { RootState } from '../reducers';
 
 const Form = styled.form`margin-left: 15px;`;
 
@@ -16,7 +17,7 @@ const LoginBtn = styled(Button)`
 
 const LoginForm: React.FunctionComponent = () => {
 	const dispatch = useDispatch();
-	const { isLoggingIn } = useSelector((state) => state.user);
+	const { isLoggingIn } = useSelector((state: RootState) => state.user);
 	const [ id, onChangeId ]: UseInputType = useInput('');
 	const [ password, onChangePassword ]: UseInputType = useInput('');
 

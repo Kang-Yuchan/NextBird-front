@@ -7,13 +7,14 @@ import LoginForm from '../components/LoginForm';
 import UserCard from '../components/UserCard';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
+import { RootState } from '../reducers';
 
 const InputSearch = styled(Input.Search)`
   vertical-align: middle;
 `;
 
 const AppLayout = ({ children }: NodeProps): React.ReactNode => {
-	const { me } = useSelector((state) => state.user);
+	const { me } = useSelector((state: RootState) => state.user);
 
 	const onSearch = (value) => {
 		Router.push({ pathname: '/hashtag', query: { tag: value } }, `/hashtag/${value}`);

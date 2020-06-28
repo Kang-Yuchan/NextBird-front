@@ -4,14 +4,15 @@ import { useSelector } from 'react-redux';
 import { Card, Avatar } from 'antd';
 import { LOAD_USER_POSTS_REQUEST } from '../../reducers/post';
 import { LOAD_USER_REQUEST } from '../../reducers/user';
+import { RootState } from '../../reducers';
 
 type ContextProps = {
 	id: number;
 };
 
 const User = ({ id }: ContextProps) => {
-	const { mainPosts } = useSelector((state) => state.post);
-	const { userInfo } = useSelector((state) => state.user);
+	const { mainPosts } = useSelector((state: RootState) => state.post);
+	const { userInfo } = useSelector((state: RootState) => state.user);
 
 	return (
 		<React.Fragment>

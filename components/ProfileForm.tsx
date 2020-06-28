@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { EDIT_ID_REQUEST } from '../reducers/user';
+import { RootState } from '../reducers';
 
 const Form = styled.form`
 	margin-bottom: 20px;
@@ -17,7 +18,7 @@ const IdInput = styled(Input)`
 const ProfileForm = (): React.ReactElement => {
 	const [ editId, setEditId ] = React.useState('');
 	const dispatch = useDispatch();
-	const { me, isEditingId } = useSelector((state) => state.user);
+	const { me, isEditingId } = useSelector((state: RootState) => state.user);
 
 	const onChangeId = React.useCallback((e) => {
 		setEditId(e.target.value);

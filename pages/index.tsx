@@ -4,6 +4,7 @@ import Post from '../components/Post';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_MAIN_POSTS_REQUEST } from '../reducers/post';
 import { MainPost } from '../interface';
+import { RootState } from '../reducers';
 
 export type PostProps = {
 	post: MainPost;
@@ -11,8 +12,8 @@ export type PostProps = {
 
 const Home: React.FunctionComponent = () => {
 	const dispatch = useDispatch();
-	const { me } = useSelector((state) => state.user);
-	const { mainPosts, hasMorePost } = useSelector((state) => state.post);
+	const { me } = useSelector((state: RootState) => state.user);
+	const { mainPosts, hasMorePost } = useSelector((state: RootState) => state.post);
 	const countRef = React.useRef<Array<number>>([]);
 
 	const onScroll = React.useCallback(

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Input, Checkbox, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { SIGN_UP_REQUEST } from '../reducers/user';
+import { RootState } from '../reducers';
 
 export const Form = styled.form`padding: 10;`;
 
@@ -30,7 +31,7 @@ const Signup: React.FunctionComponent = () => {
 	const [ passwordError, setPasswordError ] = React.useState<boolean>(false);
 	const [ termError, setTermError ] = React.useState<boolean>(false);
 	const dispatch = useDispatch();
-	const { isSigningUp, me } = useSelector((state) => state.user);
+	const { isSigningUp, me } = useSelector((state: RootState) => state.user);
 
 	React.useEffect(
 		() => {
