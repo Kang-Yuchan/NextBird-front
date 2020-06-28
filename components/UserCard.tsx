@@ -15,7 +15,7 @@ const UserCard = (): React.ReactElement => {
 	return (
 		<Card
 			actions={[
-				<Link href="/profile">
+				<Link href="/profile" prefetch>
 					<a>
 						<div key="tweet">
 							Tweet
@@ -24,7 +24,7 @@ const UserCard = (): React.ReactElement => {
 						</div>
 					</a>
 				</Link>,
-				<Link href="/profile">
+				<Link href="/profile" prefetch>
 					<a>
 						<div key="following">
 							Following
@@ -33,7 +33,7 @@ const UserCard = (): React.ReactElement => {
 						</div>
 					</a>
 				</Link>,
-				<Link href="/profile">
+				<Link href="/profile" prefetch>
 					<a>
 						<div key="follower">
 							Follower
