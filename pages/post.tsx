@@ -6,52 +6,52 @@ import { RootState } from '../reducers';
 import { backUrl } from '../config/config';
 
 interface PostProps {
-  id: number;
+	id: number;
 }
 
 const Post = ({ id }: PostProps) => {
-  const { singlePost } = useSelector((state: RootState) => state.post);
-  return (
-    <React.Fragment>
-      <Helmet
-        title={`${singlePost.User.userId}'s post`}
-        description={singlePost.content}
-        meta={[
-          {
-            name: 'description',
-            content: singlePost.content,
-          },
-          {
-            property: 'og:title',
-            content: `${singlePost.User.userId}'s post`,
-          },
-          {
-            property: 'og:description',
-            content: singlePost.content,
-          },
-          {
-            property: 'og:image',
-            content: singlePost.Images[0] && `http://nextbird.com/${singlePost.Images[0].src}`,
-          },
-          {
-            property: 'og:url',
-            content: `http://nextbird.com/post/${id}`,
-          },
-        ]}
-      />
-      <div>{singlePost.content}</div>
-      <div>{singlePost.User.userId}</div>
-      <div>{singlePost.Images[0] && <img src={`${backUrl}/${singlePost.Images[0].src}`} />}</div>
-    </React.Fragment>
-  );
+	const { singlePost } = useSelector((state: RootState) => state.post);
+	return (
+		<React.Fragment>
+			<Helmet
+				title={`${singlePost.User.userId}'s post`}
+				description={singlePost.content}
+				meta={[
+					{
+						name: 'description',
+						content: singlePost.content
+					},
+					{
+						property: 'og:title',
+						content: `${singlePost.User.userId}'s post`
+					},
+					{
+						property: 'og:description',
+						content: singlePost.content
+					},
+					{
+						property: 'og:image',
+						content: singlePost.Images[0] ? singlePost.Images[0].src : 'http://nextbird.com/favicon.ico'
+					},
+					{
+						property: 'og:url',
+						content: `http://nextbird.com/post/${id}`
+					}
+				]}
+			/>
+			<div>{singlePost.content}</div>
+			<div>{singlePost.User.userId}</div>
+			<div>{singlePost.Images[0] && <img src={`${singlePost.Images[0].src}`} />}</div>
+		</React.Fragment>
+	);
 };
 
 Post.getInitialProps = async (context) => {
-  context.store.dispatch({
-    type: LOAD_POST_REQUEST,
-    data: context.query.id,
-  });
-  return { id: parseInt(context.query.id, 10) };
+	context.store.dispatch({
+		type: LOAD_POST_REQUEST,
+		data: context.query.id
+	});
+	return { id: parseInt(context.query.id, 10) };
 };
 
 export default Post;
