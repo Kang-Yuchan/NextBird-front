@@ -44,7 +44,7 @@
 - [x] Throttling
 - [x] immer
 - [x] SEO with react-helmet
-- [ ] Performance optimization
+- [x] Performance optimization
 - [ ] Locale EN/JP/KR
 - [ ] Type error fix
 

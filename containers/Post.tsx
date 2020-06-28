@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { Card, Button, Avatar, Form, Input, List, Comment, Popover } from 'antd';
+import { Card, Button, Avatar, List, Comment, Popover } from 'antd';
 import { RetweetOutlined, MessageOutlined, EllipsisOutlined, HeartTwoTone, HeartOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-	ADD_COMMENT_REQUEST,
 	LOAD_COMMENTS_REQUEST,
 	UNLIKE_POST_REQUEST,
 	LIKE_POST_REQUEST,
@@ -14,51 +13,27 @@ import {
 } from '../reducers/post';
 import { PostProps } from '../pages';
 import { CommentItem } from '../interface';
-import PostImages from './PostImages';
-import PostCardContent from './PostCardContent';
+import PostImages from '../components/PostImages';
+import PostCardContent from '../components/PostCardContent';
 import { FOLLOW_USER_REQUEST, UNFOLLOW_USER_REQUEST } from '../reducers/user';
 import { RootState } from '../reducers';
+import CommentForm from './CommentForm';
+import FollowButton from '../components/FollowButton';
 
 const PostCard = styled(Card)`
   margin-bottom: 20px;
 `;
 
-const Post = ({ post }: PostProps): React.ReactElement => {
-	const { isAddingComment, addedComment } = useSelector((state: RootState) => state.post);
-	const { me } = useSelector((state: RootState) => state.user);
+const Post = React.memo(({ post }: PostProps): React.ReactElement => {
+	const id = useSelector((state: RootState) => state.user.me && state.user.me.id);
 	const dispatch = useDispatch();
 	const [ commentFormOpened, setCommentFormOpened ] = React.useState<boolean>(false);
-	const [ commentText, setCommentText ] = React.useState<string>('');
 
-	const liked = me && post.Likers && post.Likers.find((v) => v.id == me.id);
-
-	React.useEffect(
-		() => {
-			setCommentText('');
-		},
-		[ addedComment === true ]
-	);
-
-	const onSubmitComment = React.useCallback(
-		(e) => {
-			e.preventDefault();
-			if (!me) {
-				return alert('Please log in.');
-			}
-			return dispatch({
-				type: ADD_COMMENT_REQUEST,
-				data: {
-					postId: post.id,
-					content: commentText
-				}
-			});
-		},
-		[ me && me.id, commentText ]
-	);
+	const liked = id && post.Likers && post.Likers.find((v) => v.id == id);
 
 	const onRetweet = React.useCallback(
 		() => {
-			if (!me) {
+			if (!id) {
 				return alert('Please log in.');
 			}
 			return dispatch({
@@ -66,7 +41,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 				data: post.id
 			});
 		},
-		[ me && me.id, post && post.id ]
+		[ id, post && post.id ]
 	);
 
 	const onToggleComment = React.useCallback(() => {
@@ -79,13 +54,9 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 		}
 	}, []);
 
-	const onChangeComment = React.useCallback((e) => {
-		setCommentText(e.target.value);
-	}, []);
-
 	const onToggleLike = React.useCallback(
 		() => {
-			if (!me) {
+			if (!id) {
 				return alert('Please log in.');
 			}
 			if (liked) {
@@ -100,7 +71,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 				});
 			}
 		},
-		[ me && me.id, post && post.id, liked ]
+		[ id, post && post.id, liked ]
 	);
 
 	const onFollow = React.useCallback(
@@ -150,7 +121,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 						key="ellipsis"
 						content={
 							<Button.Group>
-								{me && post.UserId === me.id ? (
+								{id && post.UserId === id ? (
 									<React.Fragment>
 										<Button>Edit</Button>
 										<Button danger onClick={onRemovePost(post.id)}>
@@ -167,14 +138,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 					</Popover>
 				]}
 				title={post.RetweetId ? `${post.User.userId} retweet this post.` : null}
-				extra={
-					!me || post.User.id === me.id ? null : me.Followings &&
-					me.Followings.find((v) => v.id === post.User.id) ? (
-						<Button onClick={onUnfollow(post.User.id)}>Unfollow</Button>
-					) : (
-						<Button onClick={onFollow(post.User.id)}>Follow</Button>
-					)
-				}
+				extra={<FollowButton post={post} onFollow={onFollow} onUnfollow={onUnfollow} />}
 			>
 				{post.RetweetId && post.Retweet ? (
 					<Card cover={post.Retweet.Images[0] && <PostImages images={post.Retweet.Images} />}>
@@ -212,14 +176,7 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 			</PostCard>
 			{commentFormOpened && (
 				<React.Fragment>
-					<form onSubmit={onSubmitComment}>
-						<Form.Item>
-							<Input.TextArea rows={4} value={commentText} onChange={onChangeComment} />
-						</Form.Item>
-						<Button type="primary" htmlType="submit" loading={isAddingComment}>
-							✉️
-						</Button>
-					</form>
+					<CommentForm post={post} />
 					<List
 						header={`${post.Comments ? post.Comments.length : 0} Comments`}
 						itemLayout="horizontal"
@@ -247,6 +204,6 @@ const Post = ({ post }: PostProps): React.ReactElement => {
 			)}
 		</React.Fragment>
 	);
-};
+});
 
 export default Post;

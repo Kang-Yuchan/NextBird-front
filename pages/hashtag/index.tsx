@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Post from '../../components/Post';
+import Post from '../../containers/Post';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_HASHTAG_POSTS_REQUEST } from '../../reducers/post';
 import { RootState } from '../../reducers';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Post from '../../components/Post';
+import Post from '../../containers/Post';
 import { useSelector } from 'react-redux';
 import { Card, Avatar } from 'antd';
 import { LOAD_USER_POSTS_REQUEST } from '../../reducers/post';

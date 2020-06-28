@@ -1,6 +1,6 @@
 import * as React from 'react';
-import PostForm from '../components/PostForm';
-import Post from '../components/Post';
+import PostForm from '../containers/PostForm';
+import Post from '../containers/Post';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_MAIN_POSTS_REQUEST } from '../reducers/post';
 import { MainPost } from '../interface';

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Head from 'next/head';
 import { Helmet } from 'react-helmet';
 import AppLayout from '../components/AppLayout';
 import { ComponentProps } from '../interface';

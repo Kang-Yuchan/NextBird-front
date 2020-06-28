@@ -1,8 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import { Button, List, Card } from 'antd';
-import { StopOutlined } from '@ant-design/icons';
-import ProfileForm from '../components/ProfileForm';
+import ProfileForm from '../containers/ProfileForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	LOAD_FOLLOWERS_REQUEST,
@@ -11,26 +8,9 @@ import {
 	REMOVE_FOLLOWER_REQUEST
 } from '../reducers/user';
 import { LOAD_USER_POSTS_REQUEST } from '../reducers/post';
-import Post from '../components/Post';
-import { FollowItem } from '../interface';
+import Post from '../containers/Post';
 import { RootState } from '../reducers';
-
-const FollowList = styled(List)`
-  margin-bottom: 20px;
-`;
-
-const FollowerList = styled(List)`
-  margin-bottom: 20px;
-`;
-
-const ViewMoreBtn = styled(Button)`
-	width: 100%;
-	border: 0px;
-`;
-
-const ListItem = styled(List.Item)`
-  margin-top: 20px;
-`;
+import FollowLists from '../containers/FollowLists';
 
 const Profile: React.ReactNode = () => {
 	const dispatch = useDispatch();
@@ -82,37 +62,21 @@ const Profile: React.ReactNode = () => {
 	return (
 		<React.Fragment>
 			<ProfileForm />
-			<FollowList
-				grid={{ gutter: 4, xs: 2, md: 3 }}
-				size="small"
-				header={<div>Following List</div>}
-				loadMore={hasMoreFollowing && <ViewMoreBtn onClick={loadMoreFollowings}>View More</ViewMoreBtn>}
-				bordered
-				dataSource={followingList}
-				renderItem={(item: FollowItem) => (
-					<ListItem>
-						<Card actions={[ <StopOutlined key="stop" onClick={onUnfollow(item.id)} /> ]}>
-							<Card.Meta description={item.userId} />
-						</Card>
-					</ListItem>
-				)}
+			<FollowLists
+				header={'Following List'}
+				hasMore={hasMoreFollowing}
+				loadMore={loadMoreFollowings}
+				onClickStop={onUnfollow}
+				data={followingList}
 			/>
-			<FollowerList
-				grid={{ gutter: 4, xs: 2, md: 3 }}
-				size="small"
-				header={<div>Follower List</div>}
-				loadMore={hasMoreFollower && <ViewMoreBtn onClick={loadMoreFollowers}>View More</ViewMoreBtn>}
-				bordered
-				dataSource={followerList}
-				renderItem={(item: FollowItem) => (
-					<ListItem>
-						<Card actions={[ <StopOutlined key="stop" onClick={onRemoveFollower(item.id)} /> ]}>
-							<Card.Meta description={item.userId} />
-						</Card>
-					</ListItem>
-				)}
+			<FollowLists
+				header={'Follower List'}
+				hasMore={hasMoreFollower}
+				loadMore={loadMoreFollowers}
+				onClickStop={onRemoveFollower}
+				data={followerList}
 			/>
-			<React.Fragment>{mainPosts.map((c, i) => <Post key={i} post={c} />)}</React.Fragment>
+			<React.Fragment>{mainPosts.map((content, index) => <Post key={index} post={content} />)}</React.Fragment>
 		</React.Fragment>
 	);
 };

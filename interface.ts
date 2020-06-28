@@ -16,10 +16,10 @@ export interface NodeProps {
 
 export interface UserData {
 	userId: string;
-	Posts: Array<string>;
-	Followings: Array<string>;
-	Followers: Array<string>;
-	isLoggedIn: boolean;
+	Posts: Array<{ id: number }>;
+	Followings: Array<FollowItem>;
+	Followers: Array<FollowItem>;
+	id: number;
 }
 
 export interface UserCardProps {
