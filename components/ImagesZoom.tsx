@@ -93,7 +93,7 @@ const ImagesZoom = ({ images, onClose }: ImagesZoomProps): React.ReactElement =>
 						{images.map((v, i) => {
 							return (
 								<ImageBox key={i}>
-									<Image src={`http://localhost:3065/${v.src}`} />
+									<Image src={`${v.src}`} />
 								</ImageBox>
 							);
 						})}

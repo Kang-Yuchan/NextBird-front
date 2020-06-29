@@ -40,7 +40,7 @@ const PostImages = ({ images }: PostImagesProps): React.ReactElement => {
 	if (images.length === 1) {
 		return (
 			<React.Fragment>
-				<SingleImg src={`http://localhost:3065/${images[0].src}`} onClick={onZoom} />
+				<SingleImg src={images[0].src} onClick={onZoom} />
 				{showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
 			</React.Fragment>
 		);
@@ -49,8 +49,8 @@ const PostImages = ({ images }: PostImagesProps): React.ReactElement => {
 		return (
 			<React.Fragment>
 				<BorderDiv>
-					<DobleImg src={`http://localhost:3065/${images[0].src}`} onClick={onZoom} />
-					<DobleImg src={`http://localhost:3065/${images[1].src}`} onClick={onZoom} />
+					<DobleImg src={images[0].src} onClick={onZoom} />
+					<DobleImg src={images[1].src} onClick={onZoom} />
 				</BorderDiv>
 				{showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
 			</React.Fragment>
@@ -59,7 +59,7 @@ const PostImages = ({ images }: PostImagesProps): React.ReactElement => {
 	return (
 		<React.Fragment>
 			<BorderDiv>
-				<DobleImg src={`http://localhost:3065/${images[0].src}`} onClick={onZoom} />
+				<DobleImg src={images[0].src} onClick={onZoom} />
 				<OverTripleImgs onClick={onZoom}>
 					<PlusOutlined />
 					<br />

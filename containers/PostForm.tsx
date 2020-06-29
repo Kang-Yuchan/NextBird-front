@@ -97,7 +97,7 @@ const PostForm = (): React.ReactElement => {
 			<div>
 				{imagePaths.map((v: string, i: number): React.ReactElement => (
 					<ImgDiv key={v}>
-						<Img src={`http://localhost:3065/${v}`} alt={v} />
+						<Img src={v} alt={v} />
 						<div>
 							<Button onClick={onClickRemoveImage(i)}>Delete</Button>
 						</div>

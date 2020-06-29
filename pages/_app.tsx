@@ -49,7 +49,7 @@ const NextBird = ({ Component, pageProps, store }: ComponentProps): React.ReactE
 					},
 					{
 						property: 'og:image',
-						content: 'http://localhost:3060/favicon.ico'
+						content: 'http://nextbird.site/favicon.ico'
 					}
 				]}
 				link={[

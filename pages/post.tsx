@@ -30,17 +30,17 @@ const Post = ({ id }: PostProps) => {
 					},
 					{
 						property: 'og:image',
-						content: singlePost.Images[0] && `http://localhost:3065/${singlePost.Images[0].src}`
+						content: singlePost.Images[0] ? singlePost.Images[0].src : 'http://nextbird.site/favicon.ico'
 					},
 					{
 						property: 'og:url',
-						content: `http://localhost:3060/post/${id}`
+						content: `http://nextbird.site/post/${id}`
 					}
 				]}
 			/>
 			<div>{singlePost.content}</div>
 			<div>{singlePost.User.userId}</div>
-			<div>{singlePost.Images[0] && <img src={`http://localhost:3065/${singlePost.Images[0].src}`} />}</div>
+			<div>{singlePost.Images[0] && <img src={singlePost.Images[0].src} />}</div>
 		</React.Fragment>
 	);
 };
