@@ -30,7 +30,7 @@ const Post = ({ id }: PostProps) => {
 					},
 					{
 						property: 'og:image',
-						content: singlePost.Images[0] ? singlePost.Images[0].src : 'http://nextbird.site/favicon.ico'
+						content: singlePost.Images[0] ? singlePost.Images[0].src : 'http://nextbird.site/birdlogo.png'
 					},
 					{
 						property: 'og:url',
