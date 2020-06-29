@@ -11,7 +11,7 @@
 
 > SNS app front build with Next.js, Redux, Redux-saga
 
-### 🏠 [Homepage](https://github.com/Kang-Yuchan/NextBird-front)
+### 🏠 [Homepage](http://nextbird.site)
 
 ## Stacks
 

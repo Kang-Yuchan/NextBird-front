@@ -24,7 +24,7 @@ app.prepare().then(() => {
 	server.use(cookieParser());
 	server.use(
 		expressSession({
-			resave: true,
+			resave: false,
 			saveUninitialized: false,
 			secret: process.env.COOKIE_SECRET,
 			cookie: {
