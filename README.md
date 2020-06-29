@@ -28,6 +28,12 @@
 * react-helmet(manage all of your changes to the document head): https://github.com/nfl/react-helmet
 * Express(Frontend nodejs server for Dynamic Routing): https://expressjs.com/
 
+## Backend
+
+**CONNECT TO BACKEND SERVER IN AWS EC, ROUTES53**
+
+* NextBird-back: https://github.com/Kang-Yuchan/NextBird-back
+
 ## TODO
 
 - [x] Image upload with multer
