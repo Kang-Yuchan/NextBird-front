@@ -30,7 +30,7 @@
 
 ## Backend
 
-**CONNECT TO BACKEND SERVER IN AWS EC, ROUTES53**
+**CONNECT TO BACKEND SERVER IN AWS EC2, ROUTES53**
 
 * NextBird-back: https://github.com/Kang-Yuchan/NextBird-back
 
